@@ -212,11 +212,6 @@ header {
     color: white;
 }
 
-.btn-img402 {
-    background: #0069d9;
-    color: white;
-}
-
 .carrito-panel {
     background: white;
     border-radius: 10px;
@@ -282,6 +277,8 @@ header {
     gap: 10px;
 }
 
+/* LOGIN */
+
 .modal {
     position: fixed;
     inset: 0;
@@ -345,6 +342,8 @@ header {
     display: none !important;
 }
 
+/* ADMIN */
+
 .admin-panel {
     max-width: 1100px;
     margin: 25px auto;
@@ -404,19 +403,6 @@ header {
     margin-top: 10px;
 }
 
-.info-imagen {
-    background: #f4f4f4;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 12px;
-    margin-top: 10px;
-}
-
-.progreso-migracion {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
 @media (max-width: 600px) {
     .contenedor {
         padding: 12px;
@@ -446,16 +432,14 @@ header {
 
 <main class="contenedor">
 
-    <label for="buscador" class="oculto">
-        Buscar productos
-    </label>
-
+    <label for="buscador" class="oculto">Buscar productos</label>
     <input
         type="search"
         id="buscador"
         class="buscar"
         placeholder="Buscar productos..."
-        aria-label="Buscar productos">
+        aria-label="Buscar productos"
+    >
 
     <div
         id="categorias"
@@ -478,9 +462,7 @@ header {
         aria-labelledby="tituloCarrito"
         hidden>
 
-        <h2 id="tituloCarrito" tabindex="-1">
-            Carrito
-        </h2>
+        <h2 id="tituloCarrito">Carrito</h2>
 
         <div
             id="listaCarrito"
@@ -539,7 +521,7 @@ header {
 
 </main>
 
-<!-- LOGIN -->
+<!-- LOGIN ADMIN -->
 
 <div
     id="modalLogin"
@@ -550,12 +532,9 @@ header {
 
     <div class="modal-contenido">
 
-        <h2 id="tituloLogin">
-            Acceso administrador
-        </h2>
+        <h2 id="tituloLogin">Acceso administrador</h2>
 
         <div class="campo">
-
             <label for="contrasenaLogin">
                 Contraseña
             </label>
@@ -564,7 +543,6 @@ header {
                 type="password"
                 id="contrasenaLogin"
                 autocomplete="current-password">
-
         </div>
 
         <div class="botones">
@@ -594,26 +572,22 @@ header {
     </div>
 </div>
 
-<!-- ADMIN -->
+<!-- PANEL ADMIN -->
 
 <section
     id="adminPanel"
     class="admin-panel oculto"
     aria-labelledby="tituloAdmin">
 
-    <h2 id="tituloAdmin">
-        Panel de administrador
-    </h2>
+    <h2 id="tituloAdmin">Panel de administrador</h2>
 
     <div class="botones">
-
         <button
             id="cerrarAdmin"
             class="btn btn-secundario"
             type="button">
             Cerrar panel
         </button>
-
     </div>
 
     <!-- CONFIGURACIÓN -->
@@ -623,7 +597,6 @@ header {
         <h2>Configuración</h2>
 
         <div class="campo">
-
             <label for="nombreTiendaAdmin">
                 Nombre de la tienda
             </label>
@@ -631,13 +604,10 @@ header {
             <input
                 type="text"
                 id="nombreTiendaAdmin"
-                value="TIENDA"
-                disabled>
-
+                value="TIENDA">
         </div>
 
         <div class="campo">
-
             <label for="subtituloAdmin">
                 Subtítulo
             </label>
@@ -645,17 +615,16 @@ header {
             <input
                 type="text"
                 id="subtituloAdmin">
-
         </div>
 
         <div class="campo">
-
             <label for="avisoAdmin">
                 Aviso
             </label>
 
-            <textarea id="avisoAdmin"></textarea>
-
+            <textarea
+                id="avisoAdmin">
+            </textarea>
         </div>
 
         <button
@@ -745,43 +714,6 @@ header {
 
     </div>
 
-    <!-- IMÁGENES -->
-
-    <div class="admin-seccion">
-
-        <h2>Imágenes</h2>
-
-        <p>
-            Las imágenes nuevas se comprimen automáticamente
-            hasta 1 MB y se suben a Image402.
-        </p>
-
-        <p>
-            Las imágenes de 1 MB o menos quedan almacenadas
-            de forma permanente en Image402.
-        </p>
-
-        <button
-            id="migrarImagenesImg402"
-            class="btn btn-img402"
-            type="button">
-            Migrar imágenes a Image402
-        </button>
-
-        <div
-            id="mensajeMigracionImg402"
-            class="mensaje"
-            aria-live="assertive">
-        </div>
-
-        <div
-            id="progresoMigracionImg402"
-            class="progreso-migracion"
-            aria-live="polite">
-        </div>
-
-    </div>
-
     <!-- PRODUCTO -->
 
     <div class="admin-seccion">
@@ -839,9 +771,7 @@ header {
                 </label>
 
                 <select id="categoriaProducto">
-                    <option value="">
-                        Sin categoría
-                    </option>
+                    <option value="">Sin categoría</option>
                 </select>
 
             </div>
@@ -870,18 +800,12 @@ header {
                 <input
                     type="file"
                     id="imagenProducto"
-                    accept="image/png,image/jpeg,image/webp,image/gif">
+                    accept="image/*">
 
                 <img
                     id="previewImagen"
                     class="preview oculto"
                     alt="Vista previa de la imagen">
-
-                <div
-                    id="estadoImagen"
-                    class="info-imagen"
-                    aria-live="polite">
-                </div>
 
             </div>
 
@@ -963,29 +887,14 @@ header {
 
 <script>
 
-/* =========================================================
-   CONFIGURACIÓN
-========================================================= */
-
 const URL_NPOINT =
 "https://api.npoint.io/9ce9dc79ca3d9a1e1848";
-
-const URL_IMG402 =
-"/api/subir-imagen";
 
 const NUMERO_WHATSAPP =
 "5492634937407";
 
 const CONTRASENA_INICIAL =
 "brian";
-
-const LIMITE_IMAGEN_BYTES =
-1024 * 1024;
-
-
-/* =========================================================
-   VARIABLES
-========================================================= */
 
 let productos = [];
 
@@ -1005,9 +914,9 @@ let productoEditandoId = null;
 let carrito = [];
 
 
-/* =========================================================
+/* =========================
    FUNCIONES GENERALES
-========================================================= */
+========================= */
 
 function generarId() {
 
@@ -1027,11 +936,11 @@ function generarId() {
 }
 
 
-function repararIdsEnLista(lista) {
+function repararIds() {
 
     const ids = new Set();
 
-    lista.forEach(producto => {
+    productos.forEach(producto => {
 
         if (
             !producto.id ||
@@ -1045,44 +954,11 @@ function repararIdsEnLista(lista) {
 }
 
 
-function repararIds() {
-    repararIdsEnLista(productos);
-}
-
-
 function formatearPrecio(valor) {
 
     const numero = Number(valor) || 0;
 
     return numero.toLocaleString("es-AR");
-}
-
-
-function formatearTamanio(bytes) {
-
-    if (!Number.isFinite(bytes)) {
-        return "0 bytes";
-    }
-
-    if (bytes < 1024) {
-        return bytes + " bytes";
-    }
-
-    if (bytes < 1024 * 1024) {
-        return (
-            (bytes / 1024)
-                .toFixed(1)
-                .replace(".", ",") +
-            " KB"
-        );
-    }
-
-    return (
-        (bytes / (1024 * 1024))
-            .toFixed(2)
-            .replace(".", ",") +
-        " MB"
-    );
 }
 
 
@@ -1103,24 +979,18 @@ function obtenerStock(producto) {
         return null;
     }
 
-    return Math.max(
-        0,
-        Number(producto.stock)
-    );
+    return Math.max(0, Number(producto.stock));
 }
 
 
-/* =========================================================
-   NPOINT
-========================================================= */
+/* =========================
+   CARGAR Y GUARDAR NPOINT
+========================= */
 
 async function cargarDesdeNPoint() {
 
     const respuesta = await fetch(
-        URL_NPOINT + "?t=" + Date.now(),
-        {
-            cache: "no-store"
-        }
+        URL_NPOINT + "?t=" + Date.now()
     );
 
     if (!respuesta.ok) {
@@ -1138,9 +1008,7 @@ async function guardarDatosEnNPoint(
     configuracionGuardar
 ) {
 
-    repararIdsEnLista(
-        productosGuardar
-    );
+    repararIds();
 
     const datos = {
         productos: productosGuardar,
@@ -1160,7 +1028,6 @@ async function guardarDatosEnNPoint(
     );
 
     if (!respuesta.ok) {
-
         throw new Error(
             "nPoint no aceptó el guardado."
         );
@@ -1171,11 +1038,8 @@ async function guardarDatosEnNPoint(
 
     if (
         !verificacion ||
-        !Array.isArray(
-            verificacion.productos
-        )
+        !Array.isArray(verificacion.productos)
     ) {
-
         throw new Error(
             "No se pudo verificar el guardado."
         );
@@ -1194,9 +1058,9 @@ async function guardarEnNPoint() {
 }
 
 
-/* =========================================================
+/* =========================
    CONFIGURACIÓN
-========================================================= */
+========================= */
 
 function completarConfiguracion() {
 
@@ -1207,13 +1071,11 @@ function completarConfiguracion() {
         configuracion = {};
     }
 
-    configuracion.nombreTienda =
-        "TIENDA";
+    configuracion.nombreTienda = "TIENDA";
 
     if (
         typeof configuracion.subtitulo !== "string"
     ) {
-
         configuracion.subtitulo =
             "Productos para tu hogar y tecnología";
     }
@@ -1221,7 +1083,6 @@ function completarConfiguracion() {
     if (
         typeof configuracion.aviso !== "string"
     ) {
-
         configuracion.aviso =
             "Luego de realizar el pedido comunicarse por WhatsApp.";
     }
@@ -1229,7 +1090,6 @@ function completarConfiguracion() {
     if (
         typeof configuracion.mostrarStock !== "boolean"
     ) {
-
         configuracion.mostrarStock = true;
     }
 
@@ -1237,7 +1097,6 @@ function completarConfiguracion() {
         !configuracion.categoriasActivas ||
         typeof configuracion.categoriasActivas !== "object"
     ) {
-
         configuracion.categoriasActivas = {};
     }
 
@@ -1245,10 +1104,17 @@ function completarConfiguracion() {
         typeof configuracion.contrasenaAdmin !== "string" ||
         !configuracion.contrasenaAdmin
     ) {
-
         configuracion.contrasenaAdmin =
             CONTRASENA_INICIAL;
     }
+
+    /*
+       IMPORTANTE:
+       No se crean categorías fijas.
+       Se conservan las existentes y se agregan
+       automáticamente las categorías que ya tengan
+       los productos.
+    */
 
     productos.forEach(producto => {
 
@@ -1267,7 +1133,6 @@ function completarConfiguracion() {
                         .categoriasActivas[categoria]
                     === undefined
                 ) {
-
                     configuracion
                         .categoriasActivas[categoria]
                     = true;
@@ -1280,40 +1145,27 @@ function completarConfiguracion() {
 
 function aplicarConfiguracion() {
 
+    /*
+       El título visible queda siempre como TIENDA.
+    */
+
     document.getElementById(
         "tituloTienda"
-    ).textContent =
-        "TIENDA";
+    ).textContent = "TIENDA";
 
-    document.title =
-        "TIENDA";
+    document.title = "TIENDA";
 
     document
-        .querySelector(
-            'meta[property="og:title"]'
-        )
-        .setAttribute(
-            "content",
-            "TIENDA"
-        );
+        .querySelector('meta[property="og:title"]')
+        .setAttribute("content", "TIENDA");
 
     document
-        .querySelector(
-            'meta[property="og:site_name"]'
-        )
-        .setAttribute(
-            "content",
-            "TIENDA"
-        );
+        .querySelector('meta[property="og:site_name"]')
+        .setAttribute("content", "TIENDA");
 
     document
-        .querySelector(
-            'meta[name="twitter:title"]'
-        )
-        .setAttribute(
-            "content",
-            "TIENDA"
-        );
+        .querySelector('meta[name="twitter:title"]')
+        .setAttribute("content", "TIENDA");
 
     document.getElementById(
         "subtituloTienda"
@@ -1327,8 +1179,7 @@ function aplicarConfiguracion() {
 
     document.getElementById(
         "nombreTiendaAdmin"
-    ).value =
-        "TIENDA";
+    ).value = "TIENDA";
 
     document.getElementById(
         "subtituloAdmin"
@@ -1347,9 +1198,9 @@ function aplicarConfiguracion() {
 }
 
 
-/* =========================================================
+/* =========================
    CATEGORÍAS
-========================================================= */
+========================= */
 
 function obtenerCategorias() {
 
@@ -1366,19 +1217,20 @@ function obtenerCategorias() {
 
             if (
                 configuracion
-                    .categoriasActivas[categoria]
-                !== false
+                    .categoriasActivas[categoria] !== false
             ) {
 
-                if (
-                    !categorias.includes(categoria)
-                ) {
-
+                if (!categorias.includes(categoria)) {
                     categorias.push(categoria);
                 }
             }
         });
     }
+
+    /*
+       También se conservan categorías que estén
+       utilizadas por productos.
+    */
 
     productos.forEach(producto => {
 
@@ -1394,7 +1246,6 @@ function obtenerCategorias() {
                 categoria &&
                 !categorias.includes(categoria)
             ) {
-
                 categorias.push(categoria);
             }
         }
@@ -1407,20 +1258,14 @@ function obtenerCategorias() {
 function mostrarCategorias() {
 
     const contenedor =
-        document.getElementById(
-            "categorias"
-        );
+        document.getElementById("categorias");
 
     contenedor.innerHTML = "";
 
     const botonTodas =
-        document.createElement(
-            "button"
-        );
+        document.createElement("button");
 
-    botonTodas.type =
-        "button";
-
+    botonTodas.type = "button";
     botonTodas.className =
         "categoria-btn" +
         (
@@ -1429,8 +1274,7 @@ function mostrarCategorias() {
                 : ""
         );
 
-    botonTodas.textContent =
-        "Todas";
+    botonTodas.textContent = "Todas";
 
     botonTodas.addEventListener(
         "click",
@@ -1452,12 +1296,9 @@ function mostrarCategorias() {
         categoria => {
 
             const boton =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            boton.type =
-                "button";
+            boton.type = "button";
 
             boton.className =
                 "categoria-btn" +
@@ -1467,8 +1308,7 @@ function mostrarCategorias() {
                         : ""
                 );
 
-            boton.textContent =
-                categoria;
+            boton.textContent = categoria;
 
             boton.addEventListener(
                 "click",
@@ -1503,38 +1343,24 @@ function cargarCategoriasFormulario() {
     select.innerHTML =
         '<option value="">Sin categoría</option>';
 
-    const categorias =
-        obtenerCategorias();
-
-    categorias.forEach(
+    obtenerCategorias().forEach(
         categoria => {
 
             const option =
-                document.createElement(
-                    "option"
-                );
+                document.createElement("option");
 
-            option.value =
-                categoria;
+            option.value = categoria;
+            option.textContent = categoria;
 
-            option.textContent =
-                categoria;
-
-            select.appendChild(
-                option
-            );
+            select.appendChild(option);
         }
     );
 
     if (
         valorAnterior &&
-        categorias.includes(
-            valorAnterior
-        )
+        obtenerCategorias().includes(valorAnterior)
     ) {
-
-        select.value =
-            valorAnterior;
+        select.value = valorAnterior;
     }
 }
 
@@ -1554,9 +1380,7 @@ function mostrarCategoriasAdmin() {
     if (categorias.length === 0) {
 
         const mensaje =
-            document.createElement(
-                "p"
-            );
+            document.createElement("p");
 
         mensaje.textContent =
             "No hay categorías creadas.";
@@ -1572,29 +1396,21 @@ function mostrarCategoriasAdmin() {
         categoria => {
 
             const fila =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             fila.className =
                 "categoria-admin-item";
 
             const nombre =
-                document.createElement(
-                    "span"
-                );
+                document.createElement("span");
 
             nombre.textContent =
                 categoria;
 
             const boton =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            boton.type =
-                "button";
-
+            boton.type = "button";
             boton.className =
                 "btn btn-eliminar";
 
@@ -1616,10 +1432,14 @@ function mostrarCategoriasAdmin() {
                         return;
                     }
 
+                    /*
+                       No modificamos la categoría de los
+                       productos. Solamente la quitamos
+                       como categoría activa.
+                    */
+
                     delete configuracion
-                        .categoriasActivas[
-                            categoria
-                        ];
+                        .categoriasActivas[categoria];
 
                     try {
 
@@ -1646,92 +1466,72 @@ function mostrarCategoriasAdmin() {
                 }
             );
 
-            fila.appendChild(
-                nombre
-            );
+            fila.appendChild(nombre);
+            fila.appendChild(boton);
 
-            fila.appendChild(
-                boton
-            );
-
-            contenedor.appendChild(
-                fila
-            );
+            contenedor.appendChild(fila);
         }
     );
 }
 
 
-/* =========================================================
-   PRODUCTOS
-========================================================= */
+/* =========================
+   MOSTRAR PRODUCTOS
+========================= */
 
 function mostrarProductos() {
 
     const contenedor =
-        document.getElementById(
-            "productos"
-        );
+        document.getElementById("productos");
 
     const busqueda =
         document.getElementById(
             "buscador"
-        )
-        .value
+        ).value
         .trim()
         .toLowerCase();
 
     contenedor.innerHTML = "";
 
     const filtrados =
-        productos.filter(
-            producto => {
+        productos.filter(producto => {
 
-                const nombre =
-                    String(
-                        producto.nombre || ""
-                    ).toLowerCase();
+            const nombre =
+                String(
+                    producto.nombre || ""
+                ).toLowerCase();
 
-                const descripcion =
-                    String(
-                        producto.descripcion || ""
-                    ).toLowerCase();
+            const descripcion =
+                String(
+                    producto.descripcion || ""
+                ).toLowerCase();
 
-                const categoria =
-                    String(
-                        producto.categoria || ""
-                    ).toLowerCase();
+            const categoria =
+                String(
+                    producto.categoria || ""
+                ).toLowerCase();
 
-                const coincideBusqueda =
-                    !busqueda ||
-                    nombre.includes(
-                        busqueda
-                    ) ||
-                    descripcion.includes(
-                        busqueda
-                    ) ||
-                    categoria.includes(
-                        busqueda
-                    );
+            const coincideBusqueda =
+                !busqueda ||
+                nombre.includes(busqueda) ||
+                descripcion.includes(busqueda) ||
+                categoria.includes(busqueda);
 
-                const coincideCategoria =
-                    categoriaSeleccionada === "Todas" ||
-                    producto.categoria ===
-                        categoriaSeleccionada;
+            const coincideCategoria =
+                categoriaSeleccionada === "Todas" ||
+                producto.categoria ===
+                    categoriaSeleccionada;
 
-                return (
-                    coincideBusqueda &&
-                    coincideCategoria
-                );
-            }
-        );
+            return (
+                coincideBusqueda &&
+                coincideCategoria
+            );
+        });
 
     if (filtrados.length === 0) {
 
         const mensaje =
-            document.createElement(
-                "p"
-            );
+            document.createElement("p");
 
         mensaje.textContent =
             "No se encontraron productos.";
@@ -1747,54 +1547,33 @@ function mostrarProductos() {
         producto => {
 
             const tarjeta =
-                document.createElement(
-                    "article"
-                );
+                document.createElement("article");
 
             tarjeta.className =
                 "producto";
 
-            if (producto.imagen) {
+            const imagen =
+                document.createElement("img");
 
-                const imagen =
-                    document.createElement(
-                        "img"
-                    );
+            imagen.src =
+                producto.imagen || "";
 
-                imagen.src =
-                    producto.imagen;
+            imagen.alt =
+                "Imagen de " +
+                producto.nombre;
 
-                imagen.alt =
-                    "Imagen de " +
-                    producto.nombre;
-
-                imagen.loading =
-                    "lazy";
-
-                imagen.decoding =
-                    "async";
-
-                tarjeta.appendChild(
-                    imagen
-                );
-            }
+            tarjeta.appendChild(imagen);
 
             const nombre =
-                document.createElement(
-                    "h2"
-                );
+                document.createElement("h2");
 
             nombre.textContent =
                 producto.nombre || "";
 
-            tarjeta.appendChild(
-                nombre
-            );
+            tarjeta.appendChild(nombre);
 
             const precio =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             precio.className =
                 "precio";
@@ -1805,16 +1584,12 @@ function mostrarProductos() {
                     producto.precio
                 );
 
-            tarjeta.appendChild(
-                precio
-            );
+            tarjeta.appendChild(precio);
 
             if (producto.categoria) {
 
                 const categoria =
-                    document.createElement(
-                        "div"
-                    );
+                    document.createElement("div");
 
                 categoria.className =
                     "categoria-producto";
@@ -1831,9 +1606,7 @@ function mostrarProductos() {
             if (producto.descripcion) {
 
                 const descripcion =
-                    document.createElement(
-                        "div"
-                    );
+                    document.createElement("div");
 
                 descripcion.className =
                     "descripcion";
@@ -1847,12 +1620,9 @@ function mostrarProductos() {
             }
 
             const stock =
-                obtenerStock(
-                    producto
-                );
+                obtenerStock(producto);
 
-            let estaAgotado =
-                false;
+            let estaAgotado = false;
 
             if (
                 configuracion.mostrarStock &&
@@ -1860,9 +1630,7 @@ function mostrarProductos() {
             ) {
 
                 const textoStock =
-                    document.createElement(
-                        "div"
-                    );
+                    document.createElement("div");
 
                 textoStock.className =
                     "stock";
@@ -1872,8 +1640,7 @@ function mostrarProductos() {
                     textoStock.textContent =
                         "Agotado";
 
-                    estaAgotado =
-                        true;
+                    estaAgotado = true;
 
                 } else {
 
@@ -1888,21 +1655,15 @@ function mostrarProductos() {
             }
 
             const botones =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             botones.className =
                 "botones-producto";
 
             const botonCarrito =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            botonCarrito.type =
-                "button";
-
+            botonCarrito.type = "button";
             botonCarrito.className =
                 "btn btn-carrito-producto";
 
@@ -1917,7 +1678,6 @@ function mostrarProductos() {
             botonCarrito.addEventListener(
                 "click",
                 () => {
-
                     agregarAlCarrito(
                         producto.id
                     );
@@ -1929,13 +1689,9 @@ function mostrarProductos() {
             );
 
             const botonWhatsApp =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            botonWhatsApp.type =
-                "button";
-
+            botonWhatsApp.type = "button";
             botonWhatsApp.className =
                 "btn btn-whatsapp";
 
@@ -1945,7 +1701,6 @@ function mostrarProductos() {
             botonWhatsApp.addEventListener(
                 "click",
                 () => {
-
                     consultarWhatsApp(
                         producto.id
                     );
@@ -1968,9 +1723,9 @@ function mostrarProductos() {
 }
 
 
-/* =========================================================
+/* =========================
    WHATSAPP INDIVIDUAL
-========================================================= */
+========================= */
 
 function consultarWhatsApp(id) {
 
@@ -1995,9 +1750,7 @@ function consultarWhatsApp(id) {
         "https://wa.me/" +
         NUMERO_WHATSAPP +
         "?text=" +
-        encodeURIComponent(
-            mensaje
-        );
+        encodeURIComponent(mensaje);
 
     window.open(
         url,
@@ -2006,9 +1759,9 @@ function consultarWhatsApp(id) {
 }
 
 
-/* =========================================================
+/* =========================
    CARRITO
-========================================================= */
+========================= */
 
 function obtenerCantidadCarrito(id) {
 
@@ -2035,14 +1788,10 @@ function agregarAlCarrito(id) {
     }
 
     const stock =
-        obtenerStock(
-            producto
-        );
+        obtenerStock(producto);
 
     const cantidadActual =
-        obtenerCantidadCarrito(
-            id
-        );
+        obtenerCantidadCarrito(id);
 
     if (
         stock !== null &&
@@ -2108,13 +1857,10 @@ function cambiarCantidadCarrito(
     }
 
     const nuevaCantidad =
-        item.cantidad +
-        cambio;
+        item.cantidad + cambio;
 
     const stock =
-        obtenerStock(
-            producto
-        );
+        obtenerStock(producto);
 
     if (
         nuevaCantidad > 0 &&
@@ -2134,8 +1880,7 @@ function cambiarCantidadCarrito(
 
         carrito =
             carrito.filter(
-                item =>
-                    item.id !== id
+                item => item.id !== id
             );
 
     } else {
@@ -2152,8 +1897,7 @@ function quitarDelCarrito(id) {
 
     carrito =
         carrito.filter(
-            item =>
-                item.id !== id
+            item => item.id !== id
         );
 
     mostrarCarrito();
@@ -2180,8 +1924,7 @@ function calcularTotalCarrito() {
 
             const producto =
                 productos.find(
-                    p =>
-                        p.id === item.id
+                    p => p.id === item.id
                 );
 
             if (!producto) {
@@ -2190,9 +1933,7 @@ function calcularTotalCarrito() {
 
             return total +
                 (
-                    Number(
-                        producto.precio
-                    ) *
+                    Number(producto.precio) *
                     item.cantidad
                 );
 
@@ -2231,9 +1972,7 @@ function mostrarCarrito() {
     if (carrito.length === 0) {
 
         const mensaje =
-            document.createElement(
-                "p"
-            );
+            document.createElement("p");
 
         mensaje.textContent =
             "El carrito está vacío.";
@@ -2255,8 +1994,7 @@ function mostrarCarrito() {
 
             const producto =
                 productos.find(
-                    p =>
-                        p.id === item.id
+                    p => p.id === item.id
                 );
 
             if (!producto) {
@@ -2264,17 +2002,13 @@ function mostrarCarrito() {
             }
 
             const contenedor =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             contenedor.className =
                 "carrito-item";
 
             const nombre =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             nombre.className =
                 "carrito-nombre";
@@ -2287,9 +2021,7 @@ function mostrarCarrito() {
             );
 
             const precio =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             precio.className =
                 "carrito-precio";
@@ -2305,24 +2037,16 @@ function mostrarCarrito() {
             );
 
             const controles =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             controles.className =
                 "controles-cantidad";
 
             const botonMenos =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            botonMenos.type =
-                "button";
-
-            botonMenos.textContent =
-                "−";
-
+            botonMenos.type = "button";
+            botonMenos.textContent = "−";
             botonMenos.setAttribute(
                 "aria-label",
                 "Disminuir cantidad de " +
@@ -2332,7 +2056,6 @@ function mostrarCarrito() {
             botonMenos.addEventListener(
                 "click",
                 () => {
-
                     cambiarCantidadCarrito(
                         producto.id,
                         -1
@@ -2345,9 +2068,7 @@ function mostrarCarrito() {
             );
 
             const cantidad =
-                document.createElement(
-                    "span"
-                );
+                document.createElement("span");
 
             cantidad.className =
                 "cantidad";
@@ -2355,21 +2076,21 @@ function mostrarCarrito() {
             cantidad.textContent =
                 item.cantidad;
 
+            cantidad.setAttribute(
+                "aria-label",
+                "Cantidad " +
+                item.cantidad
+            );
+
             controles.appendChild(
                 cantidad
             );
 
             const botonMas =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            botonMas.type =
-                "button";
-
-            botonMas.textContent =
-                "+";
-
+            botonMas.type = "button";
+            botonMas.textContent = "+";
             botonMas.setAttribute(
                 "aria-label",
                 "Aumentar cantidad de " +
@@ -2379,7 +2100,6 @@ function mostrarCarrito() {
             botonMas.addEventListener(
                 "click",
                 () => {
-
                     cambiarCantidadCarrito(
                         producto.id,
                         1
@@ -2396,17 +2116,13 @@ function mostrarCarrito() {
             );
 
             const subtotal =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             subtotal.className =
                 "subtotal";
 
             const valorSubtotal =
-                Number(
-                    producto.precio
-                ) *
+                Number(producto.precio) *
                 item.cantidad;
 
             subtotal.textContent =
@@ -2420,13 +2136,9 @@ function mostrarCarrito() {
             );
 
             const quitar =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            quitar.type =
-                "button";
-
+            quitar.type = "button";
             quitar.className =
                 "btn btn-eliminar";
 
@@ -2436,7 +2148,6 @@ function mostrarCarrito() {
             quitar.addEventListener(
                 "click",
                 () => {
-
                     quitarDelCarrito(
                         producto.id
                     );
@@ -2489,9 +2200,9 @@ function cerrarCarrito() {
 }
 
 
-/* =========================================================
-   WHATSAPP CARRITO
-========================================================= */
+/* =========================
+   ENVIAR CARRITO WHATSAPP
+========================= */
 
 async function enviarCarritoWhatsApp() {
 
@@ -2504,6 +2215,12 @@ async function enviarCarritoWhatsApp() {
 
         return;
     }
+
+    /*
+       Abrimos una ventana inmediatamente para
+       evitar que el navegador bloquee WhatsApp
+       después del await.
+    */
 
     const ventana =
         window.open(
@@ -2524,6 +2241,11 @@ async function enviarCarritoWhatsApp() {
         "Verificando stock y preparando el pedido...";
 
     try {
+
+        /*
+           Volvemos a leer nPoint justo antes
+           de descontar el stock.
+        */
 
         const datosActuales =
             await cargarDesdeNPoint();
@@ -2546,13 +2268,13 @@ async function enviarCarritoWhatsApp() {
                 })
             );
 
-        repararIdsEnLista(
-            productosActualizados
-        );
-
         const detalles = [];
 
         let total = 0;
+
+        /*
+           Verificación completa.
+        */
 
         for (
             const item of carrito
@@ -2560,21 +2282,20 @@ async function enviarCarritoWhatsApp() {
 
             const producto =
                 productosActualizados.find(
-                    p =>
-                        p.id === item.id
+                    p => p.id === item.id
                 );
 
             if (!producto) {
 
                 throw new Error(
-                    "Uno de los productos del carrito ya no existe."
+                    "El producto " +
+                    item.id +
+                    " ya no existe."
                 );
             }
 
             const stock =
-                obtenerStock(
-                    producto
-                );
+                obtenerStock(producto);
 
             if (
                 stock !== null &&
@@ -2590,22 +2311,23 @@ async function enviarCarritoWhatsApp() {
             }
 
             const subtotal =
-                Number(
-                    producto.precio
-                ) *
+                Number(producto.precio) *
                 item.cantidad;
 
             total += subtotal;
 
             detalles.push({
-                producto:
-                    producto,
-                cantidad:
-                    item.cantidad,
-                subtotal:
-                    subtotal
+                producto: producto,
+                cantidad: item.cantidad,
+                subtotal: subtotal
             });
         }
+
+        /*
+           Ahora descontamos stock solamente
+           de los productos que tienen stock
+           controlado.
+        */
 
         detalles.forEach(
             detalle => {
@@ -2614,9 +2336,7 @@ async function enviarCarritoWhatsApp() {
                     detalle.producto;
 
                 const stock =
-                    obtenerStock(
-                        producto
-                    );
+                    obtenerStock(producto);
 
                 if (stock !== null) {
 
@@ -2627,11 +2347,21 @@ async function enviarCarritoWhatsApp() {
             }
         );
 
+        /*
+           Guardamos usando la información más
+           reciente que acabamos de leer.
+        */
+
         const datosGuardados =
             await guardarDatosEnNPoint(
                 productosActualizados,
                 configuracionActual
             );
+
+        /*
+           Verificamos que el guardado haya quedado
+           realmente en nPoint.
+        */
 
         const productosVerificados =
             Array.isArray(
@@ -2639,6 +2369,30 @@ async function enviarCarritoWhatsApp() {
             )
                 ? datosGuardados.productos
                 : [];
+
+        for (
+            const detalle of detalles
+        ) {
+
+            const productoVerificado =
+                productosVerificados.find(
+                    p =>
+                        p.id ===
+                        detalle.producto.id
+                );
+
+            if (!productoVerificado) {
+
+                throw new Error(
+                    "No se pudo verificar el producto " +
+                    detalle.producto.nombre
+                );
+            }
+        }
+
+        /*
+           Actualizamos la tienda local.
+        */
 
         productos =
             productosVerificados;
@@ -2648,13 +2402,16 @@ async function enviarCarritoWhatsApp() {
             configuracion;
 
         completarConfiguracion();
-
         aplicarConfiguracion();
 
         mostrarCategorias();
         cargarCategoriasFormulario();
         mostrarProductos();
         cargarProductosAdmin();
+
+        /*
+           Armamos el mensaje de WhatsApp.
+        */
 
         let mensaje =
             "PEDIDO DESDE LA TIENDA\n\n";
@@ -2690,9 +2447,7 @@ async function enviarCarritoWhatsApp() {
 
         mensaje +=
             "TOTAL: $" +
-            formatearPrecio(
-                total
-            );
+            formatearPrecio(total);
 
         const url =
             "https://wa.me/" +
@@ -2729,6 +2484,11 @@ async function enviarCarritoWhatsApp() {
         if (ventana) {
             ventana.close();
         }
+
+        /*
+           Si hubo un problema de stock,
+           volvemos a cargar los datos reales.
+        */
 
         try {
 
@@ -2779,725 +2539,15 @@ async function enviarCarritoWhatsApp() {
 }
 
 
-/* =========================================================
-   IMAGE402
-========================================================= */
-
-function esImagenBase64(imagen) {
-
-    return (
-        typeof imagen === "string" &&
-        imagen.startsWith(
-            "data:image/"
-        )
-    );
-}
-
-
-function leerImagenComoImage(
-    archivo
-) {
-
-    return new Promise(
-        (resolve, reject) => {
-
-            const lector =
-                new FileReader();
-
-            lector.onload =
-                evento => {
-
-                    const imagen =
-                        new Image();
-
-                    imagen.onload =
-                        () => resolve(
-                            imagen
-                        );
-
-                    imagen.onerror =
-                        () => reject(
-                            new Error(
-                                "La imagen no se pudo leer."
-                            )
-                        );
-
-                    imagen.src =
-                        evento.target.result;
-                };
-
-            lector.onerror =
-                () => reject(
-                    new Error(
-                        "No se pudo leer el archivo."
-                    )
-                );
-
-            lector.readAsDataURL(
-                archivo
-            );
-        }
-    );
-}
-
-
-function canvasComoBlob(
-    canvas,
-    calidad
-) {
-
-    return new Promise(
-        (resolve, reject) => {
-
-            canvas.toBlob(
-                blob => {
-
-                    if (!blob) {
-
-                        reject(
-                            new Error(
-                                "No se pudo comprimir la imagen."
-                            )
-                        );
-
-                        return;
-                    }
-
-                    resolve(blob);
-                },
-                "image/jpeg",
-                calidad
-            );
-        }
-    );
-}
-
-
-async function comprimirImagenHasta1MB(
-    archivo,
-    informar = null
-) {
-
-    const imagen =
-        await leerImagenComoImage(
-            archivo
-        );
-
-    const etapas = [
-        {
-            maximo: 1400,
-            calidad: 0.82
-        },
-        {
-            maximo: 1200,
-            calidad: 0.76
-        },
-        {
-            maximo: 1100,
-            calidad: 0.70
-        },
-        {
-            maximo: 1000,
-            calidad: 0.64
-        },
-        {
-            maximo: 900,
-            calidad: 0.58
-        },
-        {
-            maximo: 800,
-            calidad: 0.52
-        },
-        {
-            maximo: 700,
-            calidad: 0.46
-        },
-        {
-            maximo: 600,
-            calidad: 0.40
-        },
-        {
-            maximo: 500,
-            calidad: 0.34
-        },
-        {
-            maximo: 400,
-            calidad: 0.30
-        }
-    ];
-
-    let ultimoBlob =
-        null;
-
-    for (
-        const etapa of etapas
-    ) {
-
-        let ancho =
-            imagen.width;
-
-        let alto =
-            imagen.height;
-
-        if (
-            ancho > etapa.maximo ||
-            alto > etapa.maximo
-        ) {
-
-            if (
-                ancho >= alto
-            ) {
-
-                alto =
-                    alto *
-                    etapa.maximo /
-                    ancho;
-
-                ancho =
-                    etapa.maximo;
-
-            } else {
-
-                ancho =
-                    ancho *
-                    etapa.maximo /
-                    alto;
-
-                alto =
-                    etapa.maximo;
-            }
-        }
-
-        ancho =
-            Math.max(
-                1,
-                Math.round(ancho)
-            );
-
-        alto =
-            Math.max(
-                1,
-                Math.round(alto)
-            );
-
-        const canvas =
-            document.createElement(
-                "canvas"
-            );
-
-        canvas.width =
-            ancho;
-
-        canvas.height =
-            alto;
-
-        const contexto =
-            canvas.getContext(
-                "2d"
-            );
-
-        contexto.fillStyle =
-            "#ffffff";
-
-        contexto.fillRect(
-            0,
-            0,
-            ancho,
-            alto
-        );
-
-        contexto.drawImage(
-            imagen,
-            0,
-            0,
-            ancho,
-            alto
-        );
-
-        const blob =
-            await canvasComoBlob(
-                canvas,
-                etapa.calidad
-            );
-
-        ultimoBlob =
-            blob;
-
-        if (typeof informar === "function") {
-
-            informar(
-                "Comprimiendo imagen: " +
-                formatearTamanio(
-                    blob.size
-                )
-            );
-        }
-
-        if (
-            blob.size <=
-            LIMITE_IMAGEN_BYTES
-        ) {
-
-            return {
-                blob: blob,
-                originalBytes:
-                    archivo.size,
-                finalBytes:
-                    blob.size
-            };
-        }
-    }
-
-    throw new Error(
-        "No se pudo comprimir la imagen a 1 MB o menos."
-    );
-}
-
-
-async function subirImagenAImg402(blob, informar = null) {
-
-    if (!blob || !(blob instanceof Blob)) {
-        throw new Error("No se recibió una imagen válida.");
-    }
-
-    if (blob.size > LIMITE_IMAGEN_BYTES) {
-        throw new Error("La imagen supera el límite de 1 MB.");
-    }
-
-    if (typeof informar === "function") {
-        informar("Subiendo imagen...");
-    }
-
-    const formulario = new FormData();
-
-    formulario.append(
-        "image",
-        blob,
-        "producto.jpg"
-    );
-
-    let respuesta;
-
-    try {
-        respuesta = await fetch(
-            URL_IMG402,
-            {
-                method: "POST",
-                body: formulario
-            }
-        );
-    } catch (error) {
-        throw new Error(
-            "No se pudo conectar con el servidor de imágenes. Verificá que api/subir-imagen.js esté publicado en Vercel."
-        );
-    }
-
-    let datos = null;
-
-    try {
-        datos = await respuesta.json();
-    } catch (error) {
-        throw new Error(
-            "El servidor de imágenes devolvió una respuesta inválida."
-        );
-    }
-
-    if (!respuesta.ok) {
-        throw new Error(
-            datos.error ||
-            datos.message ||
-            datos.detalle ||
-            "No se pudo subir la imagen."
-        );
-    }
-
-    if (!datos.url || typeof datos.url !== "string") {
-        throw new Error(
-            "El servidor de imágenes no devolvió una URL válida."
-        );
-    }
-
-    return datos.url;
-}
-
-
-/* =========================================================
-   MIGRAR BASE64 A IMAGE402
-========================================================= */
-
-function base64ABlob(
-    dataURL
-) {
-
-    const partes =
-        dataURL.split(",");
-
-    if (
-        partes.length !== 2
-    ) {
-
-        throw new Error(
-            "Imagen Base64 inválida."
-        );
-    }
-
-    const encabezado =
-        partes[0];
-
-    const datos =
-        partes[1];
-
-    const coincidencia =
-        encabezado.match(
-            /data:([^;]+);base64/
-        );
-
-    const tipo =
-        coincidencia
-            ? coincidencia[1]
-            : "image/jpeg";
-
-    const binario =
-        atob(datos);
-
-    const bytes =
-        new Uint8Array(
-            binario.length
-        );
-
-    for (
-        let i = 0;
-        i < binario.length;
-        i++
-    ) {
-
-        bytes[i] =
-            binario.charCodeAt(i);
-    }
-
-    return new Blob(
-        [bytes],
-        {
-            type: tipo
-        }
-    );
-}
-
-
-async function migrarImagenesAImg402() {
-
-    const boton =
-        document.getElementById(
-            "migrarImagenesImg402"
-        );
-
-    const mensaje =
-        document.getElementById(
-            "mensajeMigracionImg402"
-        );
-
-    const progreso =
-        document.getElementById(
-            "progresoMigracionImg402"
-        );
-
-    boton.disabled =
-        true;
-
-    mensaje.textContent =
-        "";
-
-    progreso.textContent =
-        "Buscando imágenes antiguas...";
-
-    try {
-
-        /*
-           Primero volvemos a leer nPoint.
-           Así trabajamos con los datos reales.
-        */
-
-        const datos =
-            await cargarDesdeNPoint();
-
-        if (
-            !datos ||
-            !Array.isArray(
-                datos.productos
-            )
-        ) {
-
-            throw new Error(
-                "No se encontraron productos en nPoint."
-            );
-        }
-
-        const productosOriginales =
-            datos.productos;
-
-        const productosMigrados =
-            productosOriginales.map(
-                producto => ({
-                    ...producto
-                })
-            );
-
-        const indices =
-            [];
-
-        productosMigrados.forEach(
-            (producto, indice) => {
-
-                if (
-                    esImagenBase64(
-                        producto.imagen
-                    )
-                ) {
-
-                    indices.push(
-                        indice
-                    );
-                }
-            }
-        );
-
-        if (
-            indices.length === 0
-        ) {
-
-            mensaje.textContent =
-                "No hay imágenes Base64 para migrar.";
-
-            progreso.textContent =
-                "Todas las imágenes ya están en formato de URL.";
-
-            return;
-        }
-
-        progreso.textContent =
-            "Se encontraron " +
-            indices.length +
-            " imágenes para migrar.";
-
-        /*
-           IMPORTANTE:
-           NO modificamos nPoint todavía.
-           Primero subimos todas las imágenes.
-        */
-
-        for (
-            let posicion = 0;
-            posicion < indices.length;
-            posicion++
-        ) {
-
-            const indice =
-                indices[posicion];
-
-            const producto =
-                productosMigrados[indice];
-
-            progreso.textContent =
-                "Migrando imagen " +
-                (posicion + 1) +
-                " de " +
-                indices.length +
-                ": " +
-                producto.nombre;
-
-            const blobOriginal =
-                base64ABlob(
-                    producto.imagen
-                );
-
-            const comprimida =
-                await comprimirImagenDesdeBlob(
-                    blobOriginal,
-                    mensaje =>
-                        progreso.textContent =
-                            "Producto " +
-                            producto.nombre +
-                            ": " +
-                            mensaje
-                );
-
-            const url =
-                await subirImagenAImg402(
-                    comprimida.blob,
-                    mensaje =>
-                        progreso.textContent =
-                            "Producto " +
-                            producto.nombre +
-                            ": " +
-                            mensaje
-                );
-
-            /*
-               Verificamos que realmente haya
-               una URL antes de reemplazar Base64.
-            */
-
-            if (
-                !url ||
-                !url.startsWith(
-                    "http"
-                )
-            ) {
-
-                throw new Error(
-                    "Image402 no devolvió una URL válida para " +
-                    producto.nombre
-                );
-            }
-
-            productosMigrados[indice].imagen =
-                url;
-
-            mensaje.textContent =
-                "Imagen subida: " +
-                producto.nombre +
-                " — " +
-                formatearTamanio(
-                    blobOriginal.size
-                ) +
-                " → " +
-                formatearTamanio(
-                    comprimida.finalBytes
-                );
-        }
-
-        /*
-           Comprobación de seguridad:
-           no debe quedar ningún Base64.
-        */
-
-        const quedanBase64 =
-            productosMigrados.some(
-                producto =>
-                    esImagenBase64(
-                        producto.imagen
-                    )
-            );
-
-        if (quedanBase64) {
-
-            throw new Error(
-                "La migración no terminó correctamente. nPoint NO fue modificado."
-            );
-        }
-
-        progreso.textContent =
-            "Todas las imágenes fueron subidas. Guardando cambios en nPoint...";
-
-        /*
-           RECIÉN AHORA reemplazamos los datos
-           antiguos de nPoint.
-        */
-
-        const datosGuardados =
-            await guardarDatosEnNPoint(
-                productosMigrados,
-                datos.configuracion ||
-                configuracion
-            );
-
-        /*
-           Verificación final.
-        */
-
-        const quedanBase64Despues =
-            datosGuardados.productos.some(
-                producto =>
-                    esImagenBase64(
-                        producto.imagen
-                    )
-            );
-
-        if (
-            quedanBase64Despues
-        ) {
-
-            throw new Error(
-                "La verificación final detectó imágenes Base64 todavía presentes."
-            );
-        }
-
-        productos =
-            datosGuardados.productos;
-
-        configuracion =
-            datosGuardados.configuracion ||
-            configuracion;
-
-        completarConfiguracion();
-        aplicarConfiguracion();
-
-        mostrarCategorias();
-        cargarCategoriasFormulario();
-        mostrarProductos();
-        cargarProductosAdmin();
-
-        progreso.textContent =
-            "Migración terminada correctamente.";
-
-        mensaje.textContent =
-            "Se migraron " +
-            indices.length +
-            " imágenes a Image402 correctamente.";
-
-    } catch (error) {
-
-        console.error(error);
-
-        mensaje.textContent =
-            "No se completó la migración: " +
-            error.message;
-
-        progreso.textContent =
-            "IMPORTANTE: si ocurrió un error antes del guardado final, los productos de nPoint originales no fueron reemplazados.";
-
-    } finally {
-
-        boton.disabled =
-            false;
-    }
-}
-
-
-async function comprimirImagenDesdeBlob(
-    blob,
-    informar = null
-) {
-
-    const archivo =
-        new File(
-            [blob],
-            "imagen.jpg",
-            {
-                type:
-                    blob.type ||
-                    "image/jpeg"
-            }
-        );
-
-    return await comprimirImagenHasta1MB(
-        archivo,
-        informar
-    );
-}
-
-
-/* =========================================================
+/* =========================
    ADMIN
-========================================================= */
+========================= */
 
 function abrirLogin() {
 
     document.getElementById(
         "modalLogin"
-    ).classList.remove(
-        "oculto"
-    );
+    ).classList.remove("oculto");
 
     document.getElementById(
         "contrasenaLogin"
@@ -3509,11 +2559,9 @@ function abrirLogin() {
 
     setTimeout(
         () => {
-
             document.getElementById(
                 "contrasenaLogin"
             ).focus();
-
         },
         50
     );
@@ -3524,9 +2572,7 @@ function cerrarLogin() {
 
     document.getElementById(
         "modalLogin"
-    ).classList.add(
-        "oculto"
-    );
+    ).classList.add("oculto");
 }
 
 
@@ -3534,16 +2580,12 @@ function abrirAdmin() {
 
     document.getElementById(
         "adminPanel"
-    ).classList.remove(
-        "oculto"
-    );
+    ).classList.remove("oculto");
 
     aplicarConfiguracion();
 
     mostrarCategoriasAdmin();
-
     cargarCategoriasFormulario();
-
     cargarProductosAdmin();
 }
 
@@ -3552,9 +2594,7 @@ function cerrarAdmin() {
 
     document.getElementById(
         "adminPanel"
-    ).classList.add(
-        "oculto"
-    );
+    ).classList.add("oculto");
 
     document.getElementById(
         "tituloTienda"
@@ -3562,9 +2602,9 @@ function cerrarAdmin() {
 }
 
 
-/* =========================================================
+/* =========================
    CONFIG ADMIN
-========================================================= */
+========================= */
 
 async function guardarConfiguracion() {
 
@@ -3593,7 +2633,6 @@ async function guardarConfiguracion() {
             datos.configuracion;
 
         completarConfiguracion();
-
         aplicarConfiguracion();
 
         document.getElementById(
@@ -3613,9 +2652,9 @@ async function guardarConfiguracion() {
 }
 
 
-/* =========================================================
-   CATEGORÍA NUEVA
-========================================================= */
+/* =========================
+   AGREGAR CATEGORÍA
+========================= */
 
 async function agregarNuevaCategoria() {
 
@@ -3694,9 +2733,9 @@ async function agregarNuevaCategoria() {
 }
 
 
-/* =========================================================
-   STOCK
-========================================================= */
+/* =========================
+   STOCK ADMIN
+========================= */
 
 async function guardarConfiguracionStock() {
 
@@ -3710,7 +2749,6 @@ async function guardarConfiguracionStock() {
         await guardarEnNPoint();
 
         aplicarConfiguracion();
-
         mostrarProductos();
 
         document.getElementById(
@@ -3730,9 +2768,9 @@ async function guardarConfiguracionStock() {
 }
 
 
-/* =========================================================
-   LISTA ADMIN PRODUCTOS
-========================================================= */
+/* =========================
+   PRODUCTOS ADMIN
+========================= */
 
 function cargarProductosAdmin() {
 
@@ -3743,14 +2781,10 @@ function cargarProductosAdmin() {
 
     contenedor.innerHTML = "";
 
-    if (
-        productos.length === 0
-    ) {
+    if (productos.length === 0) {
 
         const mensaje =
-            document.createElement(
-                "p"
-            );
+            document.createElement("p");
 
         mensaje.textContent =
             "No hay productos cargados.";
@@ -3766,29 +2800,21 @@ function cargarProductosAdmin() {
         producto => {
 
             const elemento =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             elemento.className =
                 "admin-producto";
 
             const nombre =
-                document.createElement(
-                    "strong"
-                );
+                document.createElement("strong");
 
             nombre.textContent =
                 producto.nombre;
 
-            elemento.appendChild(
-                nombre
-            );
+            elemento.appendChild(nombre);
 
             const precio =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             precio.textContent =
                 "Precio: $" +
@@ -3796,18 +2822,12 @@ function cargarProductosAdmin() {
                     producto.precio
                 );
 
-            elemento.appendChild(
-                precio
-            );
+            elemento.appendChild(precio);
 
-            if (
-                producto.categoria
-            ) {
+            if (producto.categoria) {
 
                 const categoria =
-                    document.createElement(
-                        "div"
-                    );
+                    document.createElement("div");
 
                 categoria.textContent =
                     "Categoría: " +
@@ -3819,77 +2839,31 @@ function cargarProductosAdmin() {
             }
 
             if (
-                tieneControlStock(
-                    producto
-                )
+                tieneControlStock(producto)
             ) {
 
                 const stock =
-                    document.createElement(
-                        "div"
-                    );
+                    document.createElement("div");
 
                 stock.textContent =
                     "Stock: " +
-                    obtenerStock(
-                        producto
-                    );
+                    obtenerStock(producto);
 
                 elemento.appendChild(
                     stock
                 );
             }
 
-            const imagenEstado =
-                document.createElement(
-                    "div"
-                );
-
-            if (
-                esImagenBase64(
-                    producto.imagen
-                )
-            ) {
-
-                imagenEstado.textContent =
-                    "Imagen: Base64 — pendiente de migración.";
-
-            } else if (
-                producto.imagen &&
-                producto.imagen.startsWith(
-                    "http"
-                )
-            ) {
-
-                imagenEstado.textContent =
-                    "Imagen: Image402 / URL.";
-
-            } else {
-
-                imagenEstado.textContent =
-                    "Imagen: sin imagen.";
-            }
-
-            elemento.appendChild(
-                imagenEstado
-            );
-
             const botones =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             botones.className =
                 "botones";
 
             const editar =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            editar.type =
-                "button";
-
+            editar.type = "button";
             editar.className =
                 "btn btn-editar";
 
@@ -3899,7 +2873,6 @@ function cargarProductosAdmin() {
             editar.addEventListener(
                 "click",
                 () => {
-
                     editarProducto(
                         producto.id
                     );
@@ -3911,13 +2884,9 @@ function cargarProductosAdmin() {
             );
 
             const eliminar =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            eliminar.type =
-                "button";
-
+            eliminar.type = "button";
             eliminar.className =
                 "btn btn-eliminar";
 
@@ -3927,7 +2896,6 @@ function cargarProductosAdmin() {
             eliminar.addEventListener(
                 "click",
                 () => {
-
                     eliminarProducto(
                         producto.id
                     );
@@ -3950,24 +2918,22 @@ function cargarProductosAdmin() {
 }
 
 
-/* =========================================================
-   EDITAR
-========================================================= */
+/* =========================
+   EDITAR PRODUCTO
+========================= */
 
 function editarProducto(id) {
 
     const producto =
         productos.find(
-            p =>
-                p.id === id
+            p => p.id === id
         );
 
     if (!producto) {
         return;
     }
 
-    productoEditandoId =
-        id;
+    productoEditandoId = id;
 
     document.getElementById(
         "tituloFormularioProducto"
@@ -3999,25 +2965,17 @@ function editarProducto(id) {
     document.getElementById(
         "stockProducto"
     ).value =
-        tieneControlStock(
-            producto
-        )
+        tieneControlStock(producto)
             ? producto.stock
             : "";
 
     document.getElementById(
         "imagenProducto"
-    ).value =
-        "";
+    ).value = "";
 
     const preview =
         document.getElementById(
             "previewImagen"
-        );
-
-    const estadoImagen =
-        document.getElementById(
-            "estadoImagen"
         );
 
     if (producto.imagen) {
@@ -4033,33 +2991,11 @@ function editarProducto(id) {
             "Imagen actual de " +
             producto.nombre;
 
-        if (
-            esImagenBase64(
-                producto.imagen
-            )
-        ) {
-
-            estadoImagen.textContent =
-                "Este producto todavía tiene una imagen antigua en Base64. Si elegís una imagen nueva, será subida automáticamente a Image402.";
-
-        } else {
-
-            estadoImagen.textContent =
-                "Imagen actual almacenada mediante URL.";
-        }
-
     } else {
 
         preview.classList.add(
             "oculto"
         );
-
-        preview.removeAttribute(
-            "src"
-        );
-
-        estadoImagen.textContent =
-            "";
     }
 
     document.getElementById(
@@ -4074,30 +3010,13 @@ function editarProducto(id) {
 }
 
 
-/* =========================================================
+/* =========================
    GUARDAR PRODUCTO
-========================================================= */
+========================= */
 
-async function guardarProducto(
-    evento
-) {
+async function guardarProducto(evento) {
 
     evento.preventDefault();
-
-    const boton =
-        document.getElementById(
-            "guardarProducto"
-        );
-
-    const mensaje =
-        document.getElementById(
-            "mensajeProducto"
-        );
-
-    const estadoImagen =
-        document.getElementById(
-            "estadoImagen"
-        );
 
     const nombre =
         document.getElementById(
@@ -4131,7 +3050,9 @@ async function guardarProducto(
 
     if (!nombre) {
 
-        mensaje.textContent =
+        document.getElementById(
+            "mensajeProducto"
+        ).textContent =
             "El nombre es obligatorio.";
 
         return;
@@ -4142,137 +3063,64 @@ async function guardarProducto(
         Number(precio) < 0
     ) {
 
-        mensaje.textContent =
+        document.getElementById(
+            "mensajeProducto"
+        ).textContent =
             "El precio es obligatorio.";
 
         return;
     }
 
+    let imagenBase64 = null;
+
+    if (archivo) {
+
+        try {
+
+            imagenBase64 =
+                await comprimirImagen(
+                    archivo
+                );
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById(
+                "mensajeProducto"
+            ).textContent =
+                "No se pudo procesar la imagen.";
+
+            return;
+        }
+    }
+
     let stock = "";
 
-    if (
-        stockTexto !== ""
-    ) {
+    if (stockTexto !== "") {
 
         const numeroStock =
-            Number(
-                stockTexto
-            );
+            Number(stockTexto);
 
         if (
-            !Number.isInteger(
-                numeroStock
-            ) ||
+            !Number.isInteger(numeroStock) ||
             numeroStock < 0
         ) {
 
-            mensaje.textContent =
+            document.getElementById(
+                "mensajeProducto"
+            ).textContent =
                 "El stock debe ser un número entero igual o mayor a cero.";
 
             return;
         }
 
-        stock =
-            numeroStock;
+        stock = numeroStock;
     }
-
-    boton.disabled =
-        true;
 
     try {
 
-        let imagenURL =
-            null;
-
-        /*
-           Si el usuario seleccionó una imagen nueva,
-           se comprime y se sube a Image402.
-        */
-
-        if (archivo) {
-
-            mensaje.textContent =
-                "Procesando imagen...";
-
-            estadoImagen.textContent =
-                "Tamaño original: " +
-                formatearTamanio(
-                    archivo.size
-                );
-
-            const comprimida =
-                await comprimirImagenHasta1MB(
-                    archivo,
-                    texto => {
-
-                        estadoImagen.textContent =
-                            "Tamaño original: " +
-                            formatearTamanio(
-                                archivo.size
-                            ) +
-                            " — " +
-                            texto;
-                    }
-                );
-
-            estadoImagen.textContent =
-                "Imagen comprimida: " +
-                formatearTamanio(
-                    archivo.size
-                ) +
-                " → " +
-                formatearTamanio(
-                    comprimida.finalBytes
-                ) +
-                ". Subiendo a Image402...";
-
-            imagenURL =
-                await subirImagenAImg402(
-                    comprimida.blob,
-                    texto => {
-
-                        estadoImagen.textContent =
-                            "Tamaño original: " +
-                            formatearTamanio(
-                                archivo.size
-                            ) +
-                            " → " +
-                            formatearTamanio(
-                                comprimida.finalBytes
-                            ) +
-                            ". " +
-                            texto;
-                    }
-                );
-
-            if (
-                !imagenURL ||
-                !imagenURL.startsWith(
-                    "http"
-                )
-            ) {
-
-                throw new Error(
-                    "No se obtuvo una URL válida de Image402."
-                );
-            }
-
-            estadoImagen.textContent =
-                "Imagen subida correctamente a Image402. " +
-                "Original: " +
-                formatearTamanio(
-                    archivo.size
-                ) +
-                ". Final: " +
-                formatearTamanio(
-                    comprimida.finalBytes
-                ) +
-                ".";
-        }
-
-        if (
-            productoEditandoId
-        ) {
+        if (productoEditandoId) {
 
             const producto =
                 productos.find(
@@ -4282,7 +3130,6 @@ async function guardarProducto(
                 );
 
             if (!producto) {
-
                 throw new Error(
                     "Producto no encontrado."
                 );
@@ -4304,64 +3151,47 @@ async function guardarProducto(
                 stock;
 
             /*
-               Si hay una imagen nueva,
-               reemplazamos la anterior.
-               Si no, conservamos la anterior.
+               Si no se seleccionó una imagen nueva,
+               se conserva la imagen anterior.
             */
 
-            if (imagenURL) {
+            if (imagenBase64) {
 
                 producto.imagen =
-                    imagenURL;
+                    imagenBase64;
             }
 
         } else {
 
-            /*
-               Producto nuevo:
-               la imagen sigue siendo obligatoria.
-            */
+            if (!imagenBase64) {
 
-            if (!imagenURL) {
-
-                mensaje.textContent =
+                document.getElementById(
+                    "mensajeProducto"
+                ).textContent =
                     "Para un producto nuevo tenés que seleccionar una imagen.";
-
-                boton.disabled =
-                    false;
 
                 return;
             }
 
             productos.push({
 
-                id:
-                    generarId(),
+                id: generarId(),
 
-                nombre:
-                    nombre,
+                nombre: nombre,
 
-                precio:
-                    Number(precio),
+                precio: Number(precio),
 
-                descripcion:
-                    descripcion,
+                descripcion: descripcion,
 
-                categoria:
-                    categoria,
+                categoria: categoria,
 
-                stock:
-                    stock,
+                stock: stock,
 
-                imagen:
-                    imagenURL
+                imagen: imagenBase64
             });
         }
 
         repararIds();
-
-        mensaje.textContent =
-            "Guardando producto en nPoint...";
 
         const datos =
             await guardarEnNPoint();
@@ -4377,40 +3207,149 @@ async function guardarProducto(
         limpiarFormularioProducto();
 
         mostrarProductos();
-
         mostrarCategorias();
-
         cargarCategoriasFormulario();
-
         cargarProductosAdmin();
 
-        mensaje.textContent =
+        document.getElementById(
+            "mensajeProducto"
+        ).textContent =
             "Producto guardado correctamente.";
 
     } catch (error) {
 
         console.error(error);
 
-        mensaje.textContent =
-            "No se pudo guardar el producto: " +
-            error.message;
-
-    } finally {
-
-        boton.disabled =
-            false;
+        document.getElementById(
+            "mensajeProducto"
+        ).textContent =
+            "No se pudo guardar el producto.";
     }
 }
 
 
-/* =========================================================
+/* =========================
+   COMPRIMIR IMAGEN
+========================= */
+
+function comprimirImagen(
+    archivo
+) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const lector =
+                new FileReader();
+
+            lector.onload =
+                function(evento) {
+
+                    const imagen =
+                        new Image();
+
+                    imagen.onload =
+                        function() {
+
+                            const maximo =
+                                1000;
+
+                            let ancho =
+                                imagen.width;
+
+                            let alto =
+                                imagen.height;
+
+                            if (
+                                ancho > maximo ||
+                                alto > maximo
+                            ) {
+
+                                if (
+                                    ancho > alto
+                                ) {
+
+                                    alto =
+                                        alto *
+                                        maximo /
+                                        ancho;
+
+                                    ancho =
+                                        maximo;
+
+                                } else {
+
+                                    ancho =
+                                        ancho *
+                                        maximo /
+                                        alto;
+
+                                    alto =
+                                        maximo;
+                                }
+                            }
+
+                            const canvas =
+                                document.createElement(
+                                    "canvas"
+                                );
+
+                            canvas.width =
+                                Math.round(
+                                    ancho
+                                );
+
+                            canvas.height =
+                                Math.round(
+                                    alto
+                                );
+
+                            const contexto =
+                                canvas.getContext(
+                                    "2d"
+                                );
+
+                            contexto.drawImage(
+                                imagen,
+                                0,
+                                0,
+                                canvas.width,
+                                canvas.height
+                            );
+
+                            resolve(
+                                canvas.toDataURL(
+                                    "image/jpeg",
+                                    0.75
+                                )
+                            );
+                        };
+
+                    imagen.onerror =
+                        reject;
+
+                    imagen.src =
+                        evento.target.result;
+                };
+
+            lector.onerror =
+                reject;
+
+            lector.readAsDataURL(
+                archivo
+            );
+        }
+    );
+}
+
+
+/* =========================
    LIMPIAR FORMULARIO
-========================================================= */
+========================= */
 
 function limpiarFormularioProducto() {
 
-    productoEditandoId =
-        null;
+    productoEditandoId = null;
 
     document.getElementById(
         "formProducto"
@@ -4438,26 +3377,18 @@ function limpiarFormularioProducto() {
     ).removeAttribute(
         "src"
     );
-
-    document.getElementById(
-        "estadoImagen"
-    ).textContent =
-        "";
 }
 
 
-/* =========================================================
+/* =========================
    ELIMINAR PRODUCTO
-========================================================= */
+========================= */
 
-async function eliminarProducto(
-    id
-) {
+async function eliminarProducto(id) {
 
     const producto =
         productos.find(
-            p =>
-                p.id === id
+            p => p.id === id
         );
 
     if (!producto) {
@@ -4480,8 +3411,7 @@ async function eliminarProducto(
 
     productos =
         productos.filter(
-            p =>
-                p.id !== id
+            p => p.id !== id
         );
 
     try {
@@ -4498,8 +3428,7 @@ async function eliminarProducto(
 
         const sigueExistiendo =
             listaConfirmada.some(
-                p =>
-                    p.id === id
+                p => p.id === id
             );
 
         if (sigueExistiendo) {
@@ -4541,9 +3470,9 @@ async function eliminarProducto(
 }
 
 
-/* =========================================================
+/* =========================
    CONTRASEÑA
-========================================================= */
+========================= */
 
 async function cambiarContrasena() {
 
@@ -4590,9 +3519,9 @@ async function cambiarContrasena() {
 }
 
 
-/* =========================================================
+/* =========================
    INICIO
-========================================================= */
+========================= */
 
 async function iniciar() {
 
@@ -4600,6 +3529,14 @@ async function iniciar() {
 
         const datos =
             await cargarDesdeNPoint();
+
+        /*
+           MUY IMPORTANTE:
+           Nunca vaciamos los productos existentes.
+
+           Si nPoint tiene productos, se conservan
+           aunque tiendaInicializada no esté presente.
+        */
 
         if (
             datos &&
@@ -4619,8 +3556,12 @@ async function iniciar() {
 
         } else {
 
-            productos =
-                [];
+            /*
+               Solo se crea una estructura vacía
+               si realmente nPoint no tiene datos.
+            */
+
+            productos = [];
 
             completarConfiguracion();
 
@@ -4658,9 +3599,9 @@ async function iniciar() {
 }
 
 
-/* =========================================================
+/* =========================
    EVENTOS
-========================================================= */
+========================= */
 
 document.getElementById(
     "buscador"
@@ -4811,7 +3752,6 @@ document.getElementById(
         ) {
 
             cerrarLogin();
-
             abrirAdmin();
 
         } else {
@@ -4847,27 +3787,14 @@ document.getElementById(
 );
 
 
-/* =========================================================
-   MIGRACIÓN IMAGE402
-========================================================= */
+/*
+   Tres clics rápidos sobre TIENDA
+   para abrir el administrador.
+*/
 
-document.getElementById(
-    "migrarImagenesImg402"
-).addEventListener(
-    "click",
-    migrarImagenesAImg402
-);
+let contadorClicksTitulo = 0;
 
-
-/* =========================================================
-   TRES CLICS SOBRE TIENDA
-========================================================= */
-
-let contadorClicksTitulo =
-    0;
-
-let ultimoClickTitulo =
-    0;
+let ultimoClickTitulo = 0;
 
 document.getElementById(
     "tituloTienda"
@@ -4883,9 +3810,7 @@ document.getElementById(
             ultimoClickTitulo >
             1200
         ) {
-
-            contadorClicksTitulo =
-                0;
+            contadorClicksTitulo = 0;
         }
 
         contadorClicksTitulo++;
@@ -4897,8 +3822,7 @@ document.getElementById(
             contadorClicksTitulo >= 3
         ) {
 
-            contadorClicksTitulo =
-                0;
+            contadorClicksTitulo = 0;
 
             abrirLogin();
         }
@@ -4927,9 +3851,9 @@ document.getElementById(
 );
 
 
-/* =========================================================
-   VISTA PREVIA
-========================================================= */
+/*
+   Vista previa de imagen.
+*/
 
 document.getElementById(
     "imagenProducto"
@@ -4945,28 +3869,14 @@ document.getElementById(
                 "previewImagen"
             );
 
-        const estadoImagen =
-            document.getElementById(
-                "estadoImagen"
-            );
-
         if (!archivo) {
 
             preview.classList.add(
                 "oculto"
             );
 
-            estadoImagen.textContent =
-                "";
-
             return;
         }
-
-        estadoImagen.textContent =
-            "Tamaño original: " +
-            formatearTamanio(
-                archivo.size
-            );
 
         const lector =
             new FileReader();
@@ -4992,9 +3902,7 @@ document.getElementById(
 );
 
 
-/* =========================================================
-   INICIAR
-========================================================= */
+/* INICIAR */
 
 iniciar();
 
