@@ -1,0 +1,5014 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TIENDA</title>
+
+<meta property="og:title" content="TIENDA">
+<meta property="og:description" content="Productos para tu hogar y tecnología">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TIENDA">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TIENDA">
+<meta name="twitter:description" content="Productos para tu hogar y tecnología">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f1f1;
+    color: #222;
+}
+
+header {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 22px 15px;
+}
+
+#tituloTienda {
+    margin: 0;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+#subtituloTienda {
+    margin: 8px 0 0;
+    font-size: 17px;
+}
+
+.aviso {
+    background: #ffd400;
+    color: #111;
+    padding: 12px 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.buscar {
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+    border: 1px solid #999;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.categorias {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 0 12px;
+    white-space: nowrap;
+}
+
+.categoria-btn {
+    flex: 0 0 auto;
+    border: none;
+    background: #222;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.categoria-btn:hover,
+.categoria-btn:focus {
+    background: #555;
+}
+
+.categoria-btn.activa {
+    background: #007bff;
+}
+
+.estado {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.barra-carrito {
+    margin: 10px 0 20px;
+}
+
+.btn-carrito {
+    background: #111;
+    color: white;
+    border: none;
+    padding: 13px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.producto {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+.producto img {
+    display: block;
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.producto h2 {
+    font-size: 20px;
+    margin: 8px 0;
+}
+
+.precio {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.categoria-producto {
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.descripcion {
+    margin: 8px 0;
+}
+
+.stock {
+    margin: 8px 0;
+    font-weight: bold;
+}
+
+.botones-producto {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.btn {
+    border: none;
+    padding: 11px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.btn-carrito-producto {
+    background: #007bff;
+    color: white;
+}
+
+.btn-whatsapp {
+    background: #25d366;
+    color: white;
+}
+
+.btn-eliminar {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-editar {
+    background: #ffc107;
+    color: #111;
+}
+
+.btn-principal {
+    background: #111;
+    color: white;
+}
+
+.btn-secundario {
+    background: #777;
+    color: white;
+}
+
+.btn-img402 {
+    background: #0069d9;
+    color: white;
+}
+
+.carrito-panel {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+.carrito-item {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+}
+
+.carrito-item:last-child {
+    border-bottom: none;
+}
+
+.carrito-nombre {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.carrito-precio {
+    margin: 5px 0;
+}
+
+.controles-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.controles-cantidad button {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 6px;
+    background: #222;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.cantidad {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.subtotal {
+    font-weight: bold;
+}
+
+.total-carrito {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.botones-carrito {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-contenido {
+    background: white;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.modal-contenido h2 {
+    margin-top: 0;
+}
+
+.campo {
+    margin-bottom: 15px;
+}
+
+.campo label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #888;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.campo textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.botones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mensaje {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.oculto {
+    display: none !important;
+}
+
+.admin-panel {
+    max-width: 1100px;
+    margin: 25px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+.admin-panel h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 8px;
+}
+
+.admin-seccion {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.lista-categorias-admin {
+    margin: 15px 0;
+}
+
+.categoria-admin-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.lista-admin-productos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-producto {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.admin-producto strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.preview {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    display: block;
+    margin-top: 10px;
+}
+
+.info-imagen {
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.progreso-migracion {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .contenedor {
+        padding: 12px;
+    }
+
+    .productos {
+        grid-template-columns: 1fr;
+    }
+
+    #tituloTienda {
+        font-size: 27px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1 id="tituloTienda" tabindex="0">TIENDA</h1>
+    <p id="subtituloTienda">Productos para tu hogar y tecnología</p>
+</header>
+
+<div id="avisoTienda" class="aviso">
+    Luego de realizar el pedido comunicarse por WhatsApp.
+</div>
+
+<main class="contenedor">
+
+    <label for="buscador" class="oculto">
+        Buscar productos
+    </label>
+
+    <input
+        type="search"
+        id="buscador"
+        class="buscar"
+        placeholder="Buscar productos..."
+        aria-label="Buscar productos">
+
+    <div
+        id="categorias"
+        class="categorias"
+        aria-label="Categorías de productos">
+    </div>
+
+    <div class="barra-carrito">
+        <button
+            id="btnAbrirCarrito"
+            class="btn-carrito"
+            type="button">
+            Carrito (0)
+        </button>
+    </div>
+
+    <section
+        id="carritoPanel"
+        class="carrito-panel"
+        aria-labelledby="tituloCarrito"
+        hidden>
+
+        <h2 id="tituloCarrito" tabindex="-1">
+            Carrito
+        </h2>
+
+        <div
+            id="listaCarrito"
+            aria-live="polite">
+        </div>
+
+        <div
+            id="totalCarrito"
+            class="total-carrito">
+            Total: $0
+        </div>
+
+        <div class="botones-carrito">
+
+            <button
+                id="enviarCarritoWhatsApp"
+                class="btn btn-whatsapp"
+                type="button">
+                Enviar carrito por WhatsApp
+            </button>
+
+            <button
+                id="vaciarCarrito"
+                class="btn btn-eliminar"
+                type="button">
+                Vaciar carrito
+            </button>
+
+            <button
+                id="cerrarCarrito"
+                class="btn btn-secundario"
+                type="button">
+                Cerrar carrito
+            </button>
+
+        </div>
+
+        <div
+            id="mensajeCarrito"
+            class="mensaje"
+            aria-live="assertive">
+        </div>
+    </section>
+
+    <div
+        id="estado"
+        class="estado"
+        aria-live="polite">
+    </div>
+
+    <section
+        id="productos"
+        class="productos"
+        aria-label="Productos">
+    </section>
+
+</main>
+
+<!-- LOGIN -->
+
+<div
+    id="modalLogin"
+    class="modal oculto"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tituloLogin">
+
+    <div class="modal-contenido">
+
+        <h2 id="tituloLogin">
+            Acceso administrador
+        </h2>
+
+        <div class="campo">
+
+            <label for="contrasenaLogin">
+                Contraseña
+            </label>
+
+            <input
+                type="password"
+                id="contrasenaLogin"
+                autocomplete="current-password">
+
+        </div>
+
+        <div class="botones">
+
+            <button
+                id="ingresarAdmin"
+                class="btn btn-principal"
+                type="button">
+                Ingresar
+            </button>
+
+            <button
+                id="cerrarLogin"
+                class="btn btn-secundario"
+                type="button">
+                Cancelar
+            </button>
+
+        </div>
+
+        <div
+            id="mensajeLogin"
+            class="mensaje"
+            aria-live="assertive">
+        </div>
+
+    </div>
+</div>
+
+<!-- ADMIN -->
+
+<section
+    id="adminPanel"
+    class="admin-panel oculto"
+    aria-labelledby="tituloAdmin">
+
+    <h2 id="tituloAdmin">
+        Panel de administrador
+    </h2>
+
+    <div class="botones">
+
+        <button
+            id="cerrarAdmin"
+            class="btn btn-secundario"
+            type="button">
+            Cerrar panel
+        </button>
+
+    </div>
+
+    <!-- CONFIGURACIÓN -->
+
+    <div class="admin-seccion">
+
+        <h2>Configuración</h2>
+
+        <div class="campo">
+
+            <label for="nombreTiendaAdmin">
+                Nombre de la tienda
+            </label>
+
+            <input
+                type="text"
+                id="nombreTiendaAdmin"
+                value="TIENDA"
+                disabled>
+
+        </div>
+
+        <div class="campo">
+
+            <label for="subtituloAdmin">
+                Subtítulo
+            </label>
+
+            <input
+                type="text"
+                id="subtituloAdmin">
+
+        </div>
+
+        <div class="campo">
+
+            <label for="avisoAdmin">
+                Aviso
+            </label>
+
+            <textarea id="avisoAdmin"></textarea>
+
+        </div>
+
+        <button
+            id="guardarConfiguracion"
+            class="btn btn-principal"
+            type="button">
+            Guardar configuración
+        </button>
+
+        <div
+            id="mensajeConfiguracion"
+            class="mensaje"
+            aria-live="polite">
+        </div>
+
+    </div>
+
+    <!-- CATEGORÍAS -->
+
+    <div class="admin-seccion">
+
+        <h2>Gestionar categorías</h2>
+
+        <div class="campo">
+
+            <label for="nuevaCategoria">
+                Nueva categoría
+            </label>
+
+            <input
+                type="text"
+                id="nuevaCategoria"
+                placeholder="Ejemplo: Electrónica">
+
+        </div>
+
+        <button
+            id="agregarCategoria"
+            class="btn btn-principal"
+            type="button">
+            Agregar categoría
+        </button>
+
+        <div
+            id="mensajeCategorias"
+            class="mensaje"
+            aria-live="polite">
+        </div>
+
+        <div
+            id="listaCategoriasAdmin"
+            class="lista-categorias-admin">
+        </div>
+
+    </div>
+
+    <!-- STOCK -->
+
+    <div class="admin-seccion">
+
+        <h2>Stock</h2>
+
+        <div class="campo">
+
+            <label>
+                <input
+                    type="checkbox"
+                    id="mostrarStockAdmin">
+
+                Mostrar stock en la tienda
+            </label>
+
+        </div>
+
+        <button
+            id="guardarStock"
+            class="btn btn-principal"
+            type="button">
+            Guardar configuración de stock
+        </button>
+
+        <div
+            id="mensajeStock"
+            class="mensaje"
+            aria-live="polite">
+        </div>
+
+    </div>
+
+    <!-- IMÁGENES -->
+
+    <div class="admin-seccion">
+
+        <h2>Imágenes</h2>
+
+        <p>
+            Las imágenes nuevas se comprimen automáticamente
+            hasta 1 MB y se suben a Image402.
+        </p>
+
+        <p>
+            Las imágenes de 1 MB o menos quedan almacenadas
+            de forma permanente en Image402.
+        </p>
+
+        <button
+            id="migrarImagenesImg402"
+            class="btn btn-img402"
+            type="button">
+            Migrar imágenes a Image402
+        </button>
+
+        <div
+            id="mensajeMigracionImg402"
+            class="mensaje"
+            aria-live="assertive">
+        </div>
+
+        <div
+            id="progresoMigracionImg402"
+            class="progreso-migracion"
+            aria-live="polite">
+        </div>
+
+    </div>
+
+    <!-- PRODUCTO -->
+
+    <div class="admin-seccion">
+
+        <h2 id="tituloFormularioProducto">
+            Agregar producto
+        </h2>
+
+        <form id="formProducto">
+
+            <div class="campo">
+
+                <label for="nombreProducto">
+                    Nombre del producto *
+                </label>
+
+                <input
+                    type="text"
+                    id="nombreProducto"
+                    required>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="precioProducto">
+                    Precio *
+                </label>
+
+                <input
+                    type="number"
+                    id="precioProducto"
+                    min="0"
+                    step="1"
+                    required>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="descripcionProducto">
+                    Descripción
+                </label>
+
+                <textarea
+                    id="descripcionProducto">
+                </textarea>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="categoriaProducto">
+                    Categoría
+                </label>
+
+                <select id="categoriaProducto">
+                    <option value="">
+                        Sin categoría
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="stockProducto">
+                    Stock
+                </label>
+
+                <input
+                    type="number"
+                    id="stockProducto"
+                    min="0"
+                    step="1"
+                    placeholder="Dejar vacío si no se controla stock">
+
+            </div>
+
+            <div class="campo">
+
+                <label for="imagenProducto">
+                    Imagen
+                </label>
+
+                <input
+                    type="file"
+                    id="imagenProducto"
+                    accept="image/png,image/jpeg,image/webp,image/gif">
+
+                <img
+                    id="previewImagen"
+                    class="preview oculto"
+                    alt="Vista previa de la imagen">
+
+                <div
+                    id="estadoImagen"
+                    class="info-imagen"
+                    aria-live="polite">
+                </div>
+
+            </div>
+
+            <div class="botones">
+
+                <button
+                    id="guardarProducto"
+                    class="btn btn-principal"
+                    type="submit">
+                    Guardar producto
+                </button>
+
+                <button
+                    id="cancelarEdicion"
+                    class="btn btn-secundario oculto"
+                    type="button">
+                    Cancelar edición
+                </button>
+
+            </div>
+
+            <div
+                id="mensajeProducto"
+                class="mensaje"
+                aria-live="polite">
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- PRODUCTOS ADMIN -->
+
+    <div class="admin-seccion">
+
+        <h2>Productos cargados</h2>
+
+        <div
+            id="listaProductosAdmin"
+            class="lista-admin-productos">
+        </div>
+
+    </div>
+
+    <!-- SEGURIDAD -->
+
+    <div class="admin-seccion">
+
+        <h2>Seguridad</h2>
+
+        <div class="campo">
+
+            <label for="nuevaContrasena">
+                Nueva contraseña
+            </label>
+
+            <input
+                type="password"
+                id="nuevaContrasena">
+
+        </div>
+
+        <button
+            id="cambiarContrasena"
+            class="btn btn-principal"
+            type="button">
+            Cambiar contraseña
+        </button>
+
+        <div
+            id="mensajeSeguridad"
+            class="mensaje"
+            aria-live="polite">
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
+
+const URL_NPOINT =
+"https://api.npoint.io/9ce9dc79ca3d9a1e1848";
+
+const URL_IMG402 =
+"https://img402.dev/api/free";
+
+const NUMERO_WHATSAPP =
+"5492634937407";
+
+const CONTRASENA_INICIAL =
+"brian";
+
+const LIMITE_IMAGEN_BYTES =
+1024 * 1024;
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let productos = [];
+
+let configuracion = {
+    nombreTienda: "TIENDA",
+    subtitulo: "Productos para tu hogar y tecnología",
+    aviso: "Luego de realizar el pedido comunicarse por WhatsApp.",
+    mostrarStock: true,
+    categoriasActivas: {},
+    contrasenaAdmin: CONTRASENA_INICIAL
+};
+
+let categoriaSeleccionada = "Todas";
+
+let productoEditandoId = null;
+
+let carrito = [];
+
+
+/* =========================================================
+   FUNCIONES GENERALES
+========================================================= */
+
+function generarId() {
+
+    if (
+        window.crypto &&
+        typeof window.crypto.randomUUID === "function"
+    ) {
+        return window.crypto.randomUUID();
+    }
+
+    return "prod_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .substring(2, 10);
+}
+
+
+function repararIdsEnLista(lista) {
+
+    const ids = new Set();
+
+    lista.forEach(producto => {
+
+        if (
+            !producto.id ||
+            ids.has(producto.id)
+        ) {
+            producto.id = generarId();
+        }
+
+        ids.add(producto.id);
+    });
+}
+
+
+function repararIds() {
+    repararIdsEnLista(productos);
+}
+
+
+function formatearPrecio(valor) {
+
+    const numero = Number(valor) || 0;
+
+    return numero.toLocaleString("es-AR");
+}
+
+
+function formatearTamanio(bytes) {
+
+    if (!Number.isFinite(bytes)) {
+        return "0 bytes";
+    }
+
+    if (bytes < 1024) {
+        return bytes + " bytes";
+    }
+
+    if (bytes < 1024 * 1024) {
+        return (
+            (bytes / 1024)
+                .toFixed(1)
+                .replace(".", ",") +
+            " KB"
+        );
+    }
+
+    return (
+        (bytes / (1024 * 1024))
+            .toFixed(2)
+            .replace(".", ",") +
+        " MB"
+    );
+}
+
+
+function tieneControlStock(producto) {
+
+    return (
+        producto.stock !== "" &&
+        producto.stock !== null &&
+        producto.stock !== undefined &&
+        !isNaN(Number(producto.stock))
+    );
+}
+
+
+function obtenerStock(producto) {
+
+    if (!tieneControlStock(producto)) {
+        return null;
+    }
+
+    return Math.max(
+        0,
+        Number(producto.stock)
+    );
+}
+
+
+/* =========================================================
+   NPOINT
+========================================================= */
+
+async function cargarDesdeNPoint() {
+
+    const respuesta = await fetch(
+        URL_NPOINT + "?t=" + Date.now(),
+        {
+            cache: "no-store"
+        }
+    );
+
+    if (!respuesta.ok) {
+        throw new Error(
+            "No se pudo leer nPoint."
+        );
+    }
+
+    return await respuesta.json();
+}
+
+
+async function guardarDatosEnNPoint(
+    productosGuardar,
+    configuracionGuardar
+) {
+
+    repararIdsEnLista(
+        productosGuardar
+    );
+
+    const datos = {
+        productos: productosGuardar,
+        configuracion: configuracionGuardar,
+        tiendaInicializada: true
+    };
+
+    const respuesta = await fetch(
+        URL_NPOINT,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        }
+    );
+
+    if (!respuesta.ok) {
+
+        throw new Error(
+            "nPoint no aceptó el guardado."
+        );
+    }
+
+    const verificacion =
+        await cargarDesdeNPoint();
+
+    if (
+        !verificacion ||
+        !Array.isArray(
+            verificacion.productos
+        )
+    ) {
+
+        throw new Error(
+            "No se pudo verificar el guardado."
+        );
+    }
+
+    return verificacion;
+}
+
+
+async function guardarEnNPoint() {
+
+    return await guardarDatosEnNPoint(
+        productos,
+        configuracion
+    );
+}
+
+
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
+
+function completarConfiguracion() {
+
+    if (
+        !configuracion ||
+        typeof configuracion !== "object"
+    ) {
+        configuracion = {};
+    }
+
+    configuracion.nombreTienda =
+        "TIENDA";
+
+    if (
+        typeof configuracion.subtitulo !== "string"
+    ) {
+
+        configuracion.subtitulo =
+            "Productos para tu hogar y tecnología";
+    }
+
+    if (
+        typeof configuracion.aviso !== "string"
+    ) {
+
+        configuracion.aviso =
+            "Luego de realizar el pedido comunicarse por WhatsApp.";
+    }
+
+    if (
+        typeof configuracion.mostrarStock !== "boolean"
+    ) {
+
+        configuracion.mostrarStock = true;
+    }
+
+    if (
+        !configuracion.categoriasActivas ||
+        typeof configuracion.categoriasActivas !== "object"
+    ) {
+
+        configuracion.categoriasActivas = {};
+    }
+
+    if (
+        typeof configuracion.contrasenaAdmin !== "string" ||
+        !configuracion.contrasenaAdmin
+    ) {
+
+        configuracion.contrasenaAdmin =
+            CONTRASENA_INICIAL;
+    }
+
+    productos.forEach(producto => {
+
+        if (
+            producto.categoria &&
+            typeof producto.categoria === "string"
+        ) {
+
+            const categoria =
+                producto.categoria.trim();
+
+            if (categoria) {
+
+                if (
+                    configuracion
+                        .categoriasActivas[categoria]
+                    === undefined
+                ) {
+
+                    configuracion
+                        .categoriasActivas[categoria]
+                    = true;
+                }
+            }
+        }
+    });
+}
+
+
+function aplicarConfiguracion() {
+
+    document.getElementById(
+        "tituloTienda"
+    ).textContent =
+        "TIENDA";
+
+    document.title =
+        "TIENDA";
+
+    document
+        .querySelector(
+            'meta[property="og:title"]'
+        )
+        .setAttribute(
+            "content",
+            "TIENDA"
+        );
+
+    document
+        .querySelector(
+            'meta[property="og:site_name"]'
+        )
+        .setAttribute(
+            "content",
+            "TIENDA"
+        );
+
+    document
+        .querySelector(
+            'meta[name="twitter:title"]'
+        )
+        .setAttribute(
+            "content",
+            "TIENDA"
+        );
+
+    document.getElementById(
+        "subtituloTienda"
+    ).textContent =
+        configuracion.subtitulo || "";
+
+    document.getElementById(
+        "avisoTienda"
+    ).textContent =
+        configuracion.aviso || "";
+
+    document.getElementById(
+        "nombreTiendaAdmin"
+    ).value =
+        "TIENDA";
+
+    document.getElementById(
+        "subtituloAdmin"
+    ).value =
+        configuracion.subtitulo || "";
+
+    document.getElementById(
+        "avisoAdmin"
+    ).value =
+        configuracion.aviso || "";
+
+    document.getElementById(
+        "mostrarStockAdmin"
+    ).checked =
+        configuracion.mostrarStock !== false;
+}
+
+
+/* =========================================================
+   CATEGORÍAS
+========================================================= */
+
+function obtenerCategorias() {
+
+    const categorias = [];
+
+    if (
+        configuracion.categoriasActivas &&
+        typeof configuracion.categoriasActivas === "object"
+    ) {
+
+        Object.keys(
+            configuracion.categoriasActivas
+        ).forEach(categoria => {
+
+            if (
+                configuracion
+                    .categoriasActivas[categoria]
+                !== false
+            ) {
+
+                if (
+                    !categorias.includes(categoria)
+                ) {
+
+                    categorias.push(categoria);
+                }
+            }
+        });
+    }
+
+    productos.forEach(producto => {
+
+        if (
+            producto.categoria &&
+            typeof producto.categoria === "string"
+        ) {
+
+            const categoria =
+                producto.categoria.trim();
+
+            if (
+                categoria &&
+                !categorias.includes(categoria)
+            ) {
+
+                categorias.push(categoria);
+            }
+        }
+    });
+
+    return categorias;
+}
+
+
+function mostrarCategorias() {
+
+    const contenedor =
+        document.getElementById(
+            "categorias"
+        );
+
+    contenedor.innerHTML = "";
+
+    const botonTodas =
+        document.createElement(
+            "button"
+        );
+
+    botonTodas.type =
+        "button";
+
+    botonTodas.className =
+        "categoria-btn" +
+        (
+            categoriaSeleccionada === "Todas"
+                ? " activa"
+                : ""
+        );
+
+    botonTodas.textContent =
+        "Todas";
+
+    botonTodas.addEventListener(
+        "click",
+        () => {
+
+            categoriaSeleccionada =
+                "Todas";
+
+            mostrarCategorias();
+            mostrarProductos();
+        }
+    );
+
+    contenedor.appendChild(
+        botonTodas
+    );
+
+    obtenerCategorias().forEach(
+        categoria => {
+
+            const boton =
+                document.createElement(
+                    "button"
+                );
+
+            boton.type =
+                "button";
+
+            boton.className =
+                "categoria-btn" +
+                (
+                    categoriaSeleccionada === categoria
+                        ? " activa"
+                        : ""
+                );
+
+            boton.textContent =
+                categoria;
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    categoriaSeleccionada =
+                        categoria;
+
+                    mostrarCategorias();
+                    mostrarProductos();
+                }
+            );
+
+            contenedor.appendChild(
+                boton
+            );
+        }
+    );
+}
+
+
+function cargarCategoriasFormulario() {
+
+    const select =
+        document.getElementById(
+            "categoriaProducto"
+        );
+
+    const valorAnterior =
+        select.value;
+
+    select.innerHTML =
+        '<option value="">Sin categoría</option>';
+
+    const categorias =
+        obtenerCategorias();
+
+    categorias.forEach(
+        categoria => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                categoria;
+
+            option.textContent =
+                categoria;
+
+            select.appendChild(
+                option
+            );
+        }
+    );
+
+    if (
+        valorAnterior &&
+        categorias.includes(
+            valorAnterior
+        )
+    ) {
+
+        select.value =
+            valorAnterior;
+    }
+}
+
+
+function mostrarCategoriasAdmin() {
+
+    const contenedor =
+        document.getElementById(
+            "listaCategoriasAdmin"
+        );
+
+    contenedor.innerHTML = "";
+
+    const categorias =
+        obtenerCategorias();
+
+    if (categorias.length === 0) {
+
+        const mensaje =
+            document.createElement(
+                "p"
+            );
+
+        mensaje.textContent =
+            "No hay categorías creadas.";
+
+        contenedor.appendChild(
+            mensaje
+        );
+
+        return;
+    }
+
+    categorias.forEach(
+        categoria => {
+
+            const fila =
+                document.createElement(
+                    "div"
+                );
+
+            fila.className =
+                "categoria-admin-item";
+
+            const nombre =
+                document.createElement(
+                    "span"
+                );
+
+            nombre.textContent =
+                categoria;
+
+            const boton =
+                document.createElement(
+                    "button"
+                );
+
+            boton.type =
+                "button";
+
+            boton.className =
+                "btn btn-eliminar";
+
+            boton.textContent =
+                "Eliminar";
+
+            boton.addEventListener(
+                "click",
+                async () => {
+
+                    const confirmar =
+                        confirm(
+                            "¿Querés eliminar la categoría " +
+                            categoria +
+                            "?"
+                        );
+
+                    if (!confirmar) {
+                        return;
+                    }
+
+                    delete configuracion
+                        .categoriasActivas[
+                            categoria
+                        ];
+
+                    try {
+
+                        await guardarEnNPoint();
+
+                        mostrarCategoriasAdmin();
+                        cargarCategoriasFormulario();
+                        mostrarCategorias();
+
+                        document.getElementById(
+                            "mensajeCategorias"
+                        ).textContent =
+                            "Categoría eliminada.";
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                        document.getElementById(
+                            "mensajeCategorias"
+                        ).textContent =
+                            "No se pudo eliminar la categoría.";
+                    }
+                }
+            );
+
+            fila.appendChild(
+                nombre
+            );
+
+            fila.appendChild(
+                boton
+            );
+
+            contenedor.appendChild(
+                fila
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   PRODUCTOS
+========================================================= */
+
+function mostrarProductos() {
+
+    const contenedor =
+        document.getElementById(
+            "productos"
+        );
+
+    const busqueda =
+        document.getElementById(
+            "buscador"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+    contenedor.innerHTML = "";
+
+    const filtrados =
+        productos.filter(
+            producto => {
+
+                const nombre =
+                    String(
+                        producto.nombre || ""
+                    ).toLowerCase();
+
+                const descripcion =
+                    String(
+                        producto.descripcion || ""
+                    ).toLowerCase();
+
+                const categoria =
+                    String(
+                        producto.categoria || ""
+                    ).toLowerCase();
+
+                const coincideBusqueda =
+                    !busqueda ||
+                    nombre.includes(
+                        busqueda
+                    ) ||
+                    descripcion.includes(
+                        busqueda
+                    ) ||
+                    categoria.includes(
+                        busqueda
+                    );
+
+                const coincideCategoria =
+                    categoriaSeleccionada === "Todas" ||
+                    producto.categoria ===
+                        categoriaSeleccionada;
+
+                return (
+                    coincideBusqueda &&
+                    coincideCategoria
+                );
+            }
+        );
+
+    if (filtrados.length === 0) {
+
+        const mensaje =
+            document.createElement(
+                "p"
+            );
+
+        mensaje.textContent =
+            "No se encontraron productos.";
+
+        contenedor.appendChild(
+            mensaje
+        );
+
+        return;
+    }
+
+    filtrados.forEach(
+        producto => {
+
+            const tarjeta =
+                document.createElement(
+                    "article"
+                );
+
+            tarjeta.className =
+                "producto";
+
+            if (producto.imagen) {
+
+                const imagen =
+                    document.createElement(
+                        "img"
+                    );
+
+                imagen.src =
+                    producto.imagen;
+
+                imagen.alt =
+                    "Imagen de " +
+                    producto.nombre;
+
+                imagen.loading =
+                    "lazy";
+
+                imagen.decoding =
+                    "async";
+
+                tarjeta.appendChild(
+                    imagen
+                );
+            }
+
+            const nombre =
+                document.createElement(
+                    "h2"
+                );
+
+            nombre.textContent =
+                producto.nombre || "";
+
+            tarjeta.appendChild(
+                nombre
+            );
+
+            const precio =
+                document.createElement(
+                    "div"
+                );
+
+            precio.className =
+                "precio";
+
+            precio.textContent =
+                "$" +
+                formatearPrecio(
+                    producto.precio
+                );
+
+            tarjeta.appendChild(
+                precio
+            );
+
+            if (producto.categoria) {
+
+                const categoria =
+                    document.createElement(
+                        "div"
+                    );
+
+                categoria.className =
+                    "categoria-producto";
+
+                categoria.textContent =
+                    "Categoría: " +
+                    producto.categoria;
+
+                tarjeta.appendChild(
+                    categoria
+                );
+            }
+
+            if (producto.descripcion) {
+
+                const descripcion =
+                    document.createElement(
+                        "div"
+                    );
+
+                descripcion.className =
+                    "descripcion";
+
+                descripcion.textContent =
+                    producto.descripcion;
+
+                tarjeta.appendChild(
+                    descripcion
+                );
+            }
+
+            const stock =
+                obtenerStock(
+                    producto
+                );
+
+            let estaAgotado =
+                false;
+
+            if (
+                configuracion.mostrarStock &&
+                stock !== null
+            ) {
+
+                const textoStock =
+                    document.createElement(
+                        "div"
+                    );
+
+                textoStock.className =
+                    "stock";
+
+                if (stock <= 0) {
+
+                    textoStock.textContent =
+                        "Agotado";
+
+                    estaAgotado =
+                        true;
+
+                } else {
+
+                    textoStock.textContent =
+                        "Stock disponible: " +
+                        stock;
+                }
+
+                tarjeta.appendChild(
+                    textoStock
+                );
+            }
+
+            const botones =
+                document.createElement(
+                    "div"
+                );
+
+            botones.className =
+                "botones-producto";
+
+            const botonCarrito =
+                document.createElement(
+                    "button"
+                );
+
+            botonCarrito.type =
+                "button";
+
+            botonCarrito.className =
+                "btn btn-carrito-producto";
+
+            botonCarrito.textContent =
+                estaAgotado
+                    ? "Agotado"
+                    : "Agregar al carrito";
+
+            botonCarrito.disabled =
+                estaAgotado;
+
+            botonCarrito.addEventListener(
+                "click",
+                () => {
+
+                    agregarAlCarrito(
+                        producto.id
+                    );
+                }
+            );
+
+            botones.appendChild(
+                botonCarrito
+            );
+
+            const botonWhatsApp =
+                document.createElement(
+                    "button"
+                );
+
+            botonWhatsApp.type =
+                "button";
+
+            botonWhatsApp.className =
+                "btn btn-whatsapp";
+
+            botonWhatsApp.textContent =
+                "Consultar por WhatsApp";
+
+            botonWhatsApp.addEventListener(
+                "click",
+                () => {
+
+                    consultarWhatsApp(
+                        producto.id
+                    );
+                }
+            );
+
+            botones.appendChild(
+                botonWhatsApp
+            );
+
+            tarjeta.appendChild(
+                botones
+            );
+
+            contenedor.appendChild(
+                tarjeta
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   WHATSAPP INDIVIDUAL
+========================================================= */
+
+function consultarWhatsApp(id) {
+
+    const producto =
+        productos.find(
+            p => p.id === id
+        );
+
+    if (!producto) {
+        return;
+    }
+
+    const mensaje =
+        "Hola, quiero consultar por el producto: " +
+        producto.nombre +
+        " - Precio: $" +
+        formatearPrecio(
+            producto.precio
+        );
+
+    const url =
+        "https://wa.me/" +
+        NUMERO_WHATSAPP +
+        "?text=" +
+        encodeURIComponent(
+            mensaje
+        );
+
+    window.open(
+        url,
+        "_blank"
+    );
+}
+
+
+/* =========================================================
+   CARRITO
+========================================================= */
+
+function obtenerCantidadCarrito(id) {
+
+    const item =
+        carrito.find(
+            item => item.id === id
+        );
+
+    return item
+        ? item.cantidad
+        : 0;
+}
+
+
+function agregarAlCarrito(id) {
+
+    const producto =
+        productos.find(
+            p => p.id === id
+        );
+
+    if (!producto) {
+        return;
+    }
+
+    const stock =
+        obtenerStock(
+            producto
+        );
+
+    const cantidadActual =
+        obtenerCantidadCarrito(
+            id
+        );
+
+    if (
+        stock !== null &&
+        cantidadActual >= stock
+    ) {
+
+        document.getElementById(
+            "mensajeCarrito"
+        ).textContent =
+            "No hay más stock disponible de " +
+            producto.nombre +
+            ".";
+
+        abrirCarrito();
+
+        return;
+    }
+
+    const existente =
+        carrito.find(
+            item => item.id === id
+        );
+
+    if (existente) {
+
+        existente.cantidad++;
+
+    } else {
+
+        carrito.push({
+            id: id,
+            cantidad: 1
+        });
+    }
+
+    mostrarCarrito();
+
+    document.getElementById(
+        "mensajeCarrito"
+    ).textContent =
+        producto.nombre +
+        " agregado al carrito.";
+}
+
+
+function cambiarCantidadCarrito(
+    id,
+    cambio
+) {
+
+    const item =
+        carrito.find(
+            item => item.id === id
+        );
+
+    const producto =
+        productos.find(
+            p => p.id === id
+        );
+
+    if (!item || !producto) {
+        return;
+    }
+
+    const nuevaCantidad =
+        item.cantidad +
+        cambio;
+
+    const stock =
+        obtenerStock(
+            producto
+        );
+
+    if (
+        nuevaCantidad > 0 &&
+        stock !== null &&
+        nuevaCantidad > stock
+    ) {
+
+        document.getElementById(
+            "mensajeCarrito"
+        ).textContent =
+            "No podés superar el stock disponible.";
+
+        return;
+    }
+
+    if (nuevaCantidad <= 0) {
+
+        carrito =
+            carrito.filter(
+                item =>
+                    item.id !== id
+            );
+
+    } else {
+
+        item.cantidad =
+            nuevaCantidad;
+    }
+
+    mostrarCarrito();
+}
+
+
+function quitarDelCarrito(id) {
+
+    carrito =
+        carrito.filter(
+            item =>
+                item.id !== id
+        );
+
+    mostrarCarrito();
+}
+
+
+function vaciarCarrito() {
+
+    carrito = [];
+
+    mostrarCarrito();
+
+    document.getElementById(
+        "mensajeCarrito"
+    ).textContent =
+        "Carrito vacío.";
+}
+
+
+function calcularTotalCarrito() {
+
+    return carrito.reduce(
+        (total, item) => {
+
+            const producto =
+                productos.find(
+                    p =>
+                        p.id === item.id
+                );
+
+            if (!producto) {
+                return total;
+            }
+
+            return total +
+                (
+                    Number(
+                        producto.precio
+                    ) *
+                    item.cantidad
+                );
+
+        },
+        0
+    );
+}
+
+
+function mostrarCarrito() {
+
+    const lista =
+        document.getElementById(
+            "listaCarrito"
+        );
+
+    lista.innerHTML = "";
+
+    const boton =
+        document.getElementById(
+            "btnAbrirCarrito"
+        );
+
+    const cantidadTotal =
+        carrito.reduce(
+            (total, item) =>
+                total + item.cantidad,
+            0
+        );
+
+    boton.textContent =
+        "Carrito (" +
+        cantidadTotal +
+        ")";
+
+    if (carrito.length === 0) {
+
+        const mensaje =
+            document.createElement(
+                "p"
+            );
+
+        mensaje.textContent =
+            "El carrito está vacío.";
+
+        lista.appendChild(
+            mensaje
+        );
+
+        document.getElementById(
+            "totalCarrito"
+        ).textContent =
+            "Total: $0";
+
+        return;
+    }
+
+    carrito.forEach(
+        item => {
+
+            const producto =
+                productos.find(
+                    p =>
+                        p.id === item.id
+                );
+
+            if (!producto) {
+                return;
+            }
+
+            const contenedor =
+                document.createElement(
+                    "div"
+                );
+
+            contenedor.className =
+                "carrito-item";
+
+            const nombre =
+                document.createElement(
+                    "div"
+                );
+
+            nombre.className =
+                "carrito-nombre";
+
+            nombre.textContent =
+                producto.nombre;
+
+            contenedor.appendChild(
+                nombre
+            );
+
+            const precio =
+                document.createElement(
+                    "div"
+                );
+
+            precio.className =
+                "carrito-precio";
+
+            precio.textContent =
+                "Precio unitario: $" +
+                formatearPrecio(
+                    producto.precio
+                );
+
+            contenedor.appendChild(
+                precio
+            );
+
+            const controles =
+                document.createElement(
+                    "div"
+                );
+
+            controles.className =
+                "controles-cantidad";
+
+            const botonMenos =
+                document.createElement(
+                    "button"
+                );
+
+            botonMenos.type =
+                "button";
+
+            botonMenos.textContent =
+                "−";
+
+            botonMenos.setAttribute(
+                "aria-label",
+                "Disminuir cantidad de " +
+                producto.nombre
+            );
+
+            botonMenos.addEventListener(
+                "click",
+                () => {
+
+                    cambiarCantidadCarrito(
+                        producto.id,
+                        -1
+                    );
+                }
+            );
+
+            controles.appendChild(
+                botonMenos
+            );
+
+            const cantidad =
+                document.createElement(
+                    "span"
+                );
+
+            cantidad.className =
+                "cantidad";
+
+            cantidad.textContent =
+                item.cantidad;
+
+            controles.appendChild(
+                cantidad
+            );
+
+            const botonMas =
+                document.createElement(
+                    "button"
+                );
+
+            botonMas.type =
+                "button";
+
+            botonMas.textContent =
+                "+";
+
+            botonMas.setAttribute(
+                "aria-label",
+                "Aumentar cantidad de " +
+                producto.nombre
+            );
+
+            botonMas.addEventListener(
+                "click",
+                () => {
+
+                    cambiarCantidadCarrito(
+                        producto.id,
+                        1
+                    );
+                }
+            );
+
+            controles.appendChild(
+                botonMas
+            );
+
+            contenedor.appendChild(
+                controles
+            );
+
+            const subtotal =
+                document.createElement(
+                    "div"
+                );
+
+            subtotal.className =
+                "subtotal";
+
+            const valorSubtotal =
+                Number(
+                    producto.precio
+                ) *
+                item.cantidad;
+
+            subtotal.textContent =
+                "Subtotal: $" +
+                formatearPrecio(
+                    valorSubtotal
+                );
+
+            contenedor.appendChild(
+                subtotal
+            );
+
+            const quitar =
+                document.createElement(
+                    "button"
+                );
+
+            quitar.type =
+                "button";
+
+            quitar.className =
+                "btn btn-eliminar";
+
+            quitar.textContent =
+                "Quitar del carrito";
+
+            quitar.addEventListener(
+                "click",
+                () => {
+
+                    quitarDelCarrito(
+                        producto.id
+                    );
+                }
+            );
+
+            contenedor.appendChild(
+                quitar
+            );
+
+            lista.appendChild(
+                contenedor
+            );
+        }
+    );
+
+    document.getElementById(
+        "totalCarrito"
+    ).textContent =
+        "Total: $" +
+        formatearPrecio(
+            calcularTotalCarrito()
+        );
+}
+
+
+function abrirCarrito() {
+
+    document.getElementById(
+        "carritoPanel"
+    ).hidden = false;
+
+    mostrarCarrito();
+
+    document.getElementById(
+        "tituloCarrito"
+    ).focus();
+}
+
+
+function cerrarCarrito() {
+
+    document.getElementById(
+        "carritoPanel"
+    ).hidden = true;
+
+    document.getElementById(
+        "btnAbrirCarrito"
+    ).focus();
+}
+
+
+/* =========================================================
+   WHATSAPP CARRITO
+========================================================= */
+
+async function enviarCarritoWhatsApp() {
+
+    if (carrito.length === 0) {
+
+        document.getElementById(
+            "mensajeCarrito"
+        ).textContent =
+            "El carrito está vacío.";
+
+        return;
+    }
+
+    const ventana =
+        window.open(
+            "about:blank",
+            "_blank"
+        );
+
+    const boton =
+        document.getElementById(
+            "enviarCarritoWhatsApp"
+        );
+
+    boton.disabled = true;
+
+    document.getElementById(
+        "mensajeCarrito"
+    ).textContent =
+        "Verificando stock y preparando el pedido...";
+
+    try {
+
+        const datosActuales =
+            await cargarDesdeNPoint();
+
+        const productosActuales =
+            Array.isArray(
+                datosActuales.productos
+            )
+                ? datosActuales.productos
+                : [];
+
+        const configuracionActual =
+            datosActuales.configuracion ||
+            configuracion;
+
+        const productosActualizados =
+            productosActuales.map(
+                producto => ({
+                    ...producto
+                })
+            );
+
+        repararIdsEnLista(
+            productosActualizados
+        );
+
+        const detalles = [];
+
+        let total = 0;
+
+        for (
+            const item of carrito
+        ) {
+
+            const producto =
+                productosActualizados.find(
+                    p =>
+                        p.id === item.id
+                );
+
+            if (!producto) {
+
+                throw new Error(
+                    "Uno de los productos del carrito ya no existe."
+                );
+            }
+
+            const stock =
+                obtenerStock(
+                    producto
+                );
+
+            if (
+                stock !== null &&
+                item.cantidad > stock
+            ) {
+
+                throw new Error(
+                    "No hay suficiente stock de " +
+                    producto.nombre +
+                    ". Stock actual: " +
+                    stock
+                );
+            }
+
+            const subtotal =
+                Number(
+                    producto.precio
+                ) *
+                item.cantidad;
+
+            total += subtotal;
+
+            detalles.push({
+                producto:
+                    producto,
+                cantidad:
+                    item.cantidad,
+                subtotal:
+                    subtotal
+            });
+        }
+
+        detalles.forEach(
+            detalle => {
+
+                const producto =
+                    detalle.producto;
+
+                const stock =
+                    obtenerStock(
+                        producto
+                    );
+
+                if (stock !== null) {
+
+                    producto.stock =
+                        stock -
+                        detalle.cantidad;
+                }
+            }
+        );
+
+        const datosGuardados =
+            await guardarDatosEnNPoint(
+                productosActualizados,
+                configuracionActual
+            );
+
+        const productosVerificados =
+            Array.isArray(
+                datosGuardados.productos
+            )
+                ? datosGuardados.productos
+                : [];
+
+        productos =
+            productosVerificados;
+
+        configuracion =
+            datosGuardados.configuracion ||
+            configuracion;
+
+        completarConfiguracion();
+
+        aplicarConfiguracion();
+
+        mostrarCategorias();
+        cargarCategoriasFormulario();
+        mostrarProductos();
+        cargarProductosAdmin();
+
+        let mensaje =
+            "PEDIDO DESDE LA TIENDA\n\n";
+
+        detalles.forEach(
+            detalle => {
+
+                mensaje +=
+                    "Producto: " +
+                    detalle.producto.nombre +
+                    "\n";
+
+                mensaje +=
+                    "Cantidad: " +
+                    detalle.cantidad +
+                    "\n";
+
+                mensaje +=
+                    "Precio unitario: $" +
+                    formatearPrecio(
+                        detalle.producto.precio
+                    ) +
+                    "\n";
+
+                mensaje +=
+                    "Subtotal: $" +
+                    formatearPrecio(
+                        detalle.subtotal
+                    ) +
+                    "\n\n";
+            }
+        );
+
+        mensaje +=
+            "TOTAL: $" +
+            formatearPrecio(
+                total
+            );
+
+        const url =
+            "https://wa.me/" +
+            NUMERO_WHATSAPP +
+            "?text=" +
+            encodeURIComponent(
+                mensaje
+            );
+
+        carrito = [];
+
+        mostrarCarrito();
+
+        document.getElementById(
+            "mensajeCarrito"
+        ).textContent =
+            "Pedido preparado correctamente.";
+
+        if (ventana) {
+
+            ventana.location.href =
+                url;
+
+        } else {
+
+            window.location.href =
+                url;
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        if (ventana) {
+            ventana.close();
+        }
+
+        try {
+
+            const datos =
+                await cargarDesdeNPoint();
+
+            if (
+                datos &&
+                Array.isArray(
+                    datos.productos
+                )
+            ) {
+
+                productos =
+                    datos.productos;
+
+                configuracion =
+                    datos.configuracion ||
+                    configuracion;
+
+                completarConfiguracion();
+                aplicarConfiguracion();
+
+                mostrarCategorias();
+                cargarCategoriasFormulario();
+                mostrarProductos();
+                cargarProductosAdmin();
+                mostrarCarrito();
+            }
+
+        } catch (errorRecarga) {
+
+            console.error(
+                errorRecarga
+            );
+        }
+
+        document.getElementById(
+            "mensajeCarrito"
+        ).textContent =
+            "No se pudo enviar el pedido. " +
+            error.message;
+
+    } finally {
+
+        boton.disabled = false;
+    }
+}
+
+
+/* =========================================================
+   IMAGE402
+========================================================= */
+
+function esImagenBase64(imagen) {
+
+    return (
+        typeof imagen === "string" &&
+        imagen.startsWith(
+            "data:image/"
+        )
+    );
+}
+
+
+function leerImagenComoImage(
+    archivo
+) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const lector =
+                new FileReader();
+
+            lector.onload =
+                evento => {
+
+                    const imagen =
+                        new Image();
+
+                    imagen.onload =
+                        () => resolve(
+                            imagen
+                        );
+
+                    imagen.onerror =
+                        () => reject(
+                            new Error(
+                                "La imagen no se pudo leer."
+                            )
+                        );
+
+                    imagen.src =
+                        evento.target.result;
+                };
+
+            lector.onerror =
+                () => reject(
+                    new Error(
+                        "No se pudo leer el archivo."
+                    )
+                );
+
+            lector.readAsDataURL(
+                archivo
+            );
+        }
+    );
+}
+
+
+function canvasComoBlob(
+    canvas,
+    calidad
+) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            canvas.toBlob(
+                blob => {
+
+                    if (!blob) {
+
+                        reject(
+                            new Error(
+                                "No se pudo comprimir la imagen."
+                            )
+                        );
+
+                        return;
+                    }
+
+                    resolve(blob);
+                },
+                "image/jpeg",
+                calidad
+            );
+        }
+    );
+}
+
+
+async function comprimirImagenHasta1MB(
+    archivo,
+    informar = null
+) {
+
+    const imagen =
+        await leerImagenComoImage(
+            archivo
+        );
+
+    const etapas = [
+        {
+            maximo: 1400,
+            calidad: 0.82
+        },
+        {
+            maximo: 1200,
+            calidad: 0.76
+        },
+        {
+            maximo: 1100,
+            calidad: 0.70
+        },
+        {
+            maximo: 1000,
+            calidad: 0.64
+        },
+        {
+            maximo: 900,
+            calidad: 0.58
+        },
+        {
+            maximo: 800,
+            calidad: 0.52
+        },
+        {
+            maximo: 700,
+            calidad: 0.46
+        },
+        {
+            maximo: 600,
+            calidad: 0.40
+        },
+        {
+            maximo: 500,
+            calidad: 0.34
+        },
+        {
+            maximo: 400,
+            calidad: 0.30
+        }
+    ];
+
+    let ultimoBlob =
+        null;
+
+    for (
+        const etapa of etapas
+    ) {
+
+        let ancho =
+            imagen.width;
+
+        let alto =
+            imagen.height;
+
+        if (
+            ancho > etapa.maximo ||
+            alto > etapa.maximo
+        ) {
+
+            if (
+                ancho >= alto
+            ) {
+
+                alto =
+                    alto *
+                    etapa.maximo /
+                    ancho;
+
+                ancho =
+                    etapa.maximo;
+
+            } else {
+
+                ancho =
+                    ancho *
+                    etapa.maximo /
+                    alto;
+
+                alto =
+                    etapa.maximo;
+            }
+        }
+
+        ancho =
+            Math.max(
+                1,
+                Math.round(ancho)
+            );
+
+        alto =
+            Math.max(
+                1,
+                Math.round(alto)
+            );
+
+        const canvas =
+            document.createElement(
+                "canvas"
+            );
+
+        canvas.width =
+            ancho;
+
+        canvas.height =
+            alto;
+
+        const contexto =
+            canvas.getContext(
+                "2d"
+            );
+
+        contexto.fillStyle =
+            "#ffffff";
+
+        contexto.fillRect(
+            0,
+            0,
+            ancho,
+            alto
+        );
+
+        contexto.drawImage(
+            imagen,
+            0,
+            0,
+            ancho,
+            alto
+        );
+
+        const blob =
+            await canvasComoBlob(
+                canvas,
+                etapa.calidad
+            );
+
+        ultimoBlob =
+            blob;
+
+        if (typeof informar === "function") {
+
+            informar(
+                "Comprimiendo imagen: " +
+                formatearTamanio(
+                    blob.size
+                )
+            );
+        }
+
+        if (
+            blob.size <=
+            LIMITE_IMAGEN_BYTES
+        ) {
+
+            return {
+                blob: blob,
+                originalBytes:
+                    archivo.size,
+                finalBytes:
+                    blob.size
+            };
+        }
+    }
+
+    throw new Error(
+        "No se pudo comprimir la imagen a 1 MB o menos."
+    );
+}
+
+
+async function subirImagenAImg402(
+    blob,
+    informar = null
+) {
+
+    if (
+        blob.size >
+        LIMITE_IMAGEN_BYTES
+    ) {
+
+        throw new Error(
+            "La imagen supera 1 MB."
+        );
+    }
+
+    if (typeof informar === "function") {
+
+        informar(
+            "Subiendo imagen a Image402..."
+        );
+    }
+
+    const formulario =
+        new FormData();
+
+    formulario.append(
+        "image",
+        blob,
+        "producto.jpg"
+    );
+
+    const respuesta =
+        await fetch(
+            URL_IMG402,
+            {
+                method: "POST",
+                body: formulario
+            }
+        );
+
+    let datos = null;
+
+    try {
+
+        datos =
+            await respuesta.json();
+
+    } catch (error) {
+
+        throw new Error(
+            "Image402 respondió con un formato inesperado."
+        );
+    }
+
+    if (!respuesta.ok) {
+
+        throw new Error(
+            datos.message ||
+            datos.error ||
+            "Image402 no pudo subir la imagen."
+        );
+    }
+
+    if (
+        !datos.url ||
+        typeof datos.url !== "string"
+    ) {
+
+        throw new Error(
+            "Image402 no devolvió una URL válida."
+        );
+    }
+
+    return datos.url;
+}
+
+
+/* =========================================================
+   MIGRAR BASE64 A IMAGE402
+========================================================= */
+
+function base64ABlob(
+    dataURL
+) {
+
+    const partes =
+        dataURL.split(",");
+
+    if (
+        partes.length !== 2
+    ) {
+
+        throw new Error(
+            "Imagen Base64 inválida."
+        );
+    }
+
+    const encabezado =
+        partes[0];
+
+    const datos =
+        partes[1];
+
+    const coincidencia =
+        encabezado.match(
+            /data:([^;]+);base64/
+        );
+
+    const tipo =
+        coincidencia
+            ? coincidencia[1]
+            : "image/jpeg";
+
+    const binario =
+        atob(datos);
+
+    const bytes =
+        new Uint8Array(
+            binario.length
+        );
+
+    for (
+        let i = 0;
+        i < binario.length;
+        i++
+    ) {
+
+        bytes[i] =
+            binario.charCodeAt(i);
+    }
+
+    return new Blob(
+        [bytes],
+        {
+            type: tipo
+        }
+    );
+}
+
+
+async function migrarImagenesAImg402() {
+
+    const boton =
+        document.getElementById(
+            "migrarImagenesImg402"
+        );
+
+    const mensaje =
+        document.getElementById(
+            "mensajeMigracionImg402"
+        );
+
+    const progreso =
+        document.getElementById(
+            "progresoMigracionImg402"
+        );
+
+    boton.disabled =
+        true;
+
+    mensaje.textContent =
+        "";
+
+    progreso.textContent =
+        "Buscando imágenes antiguas...";
+
+    try {
+
+        /*
+           Primero volvemos a leer nPoint.
+           Así trabajamos con los datos reales.
+        */
+
+        const datos =
+            await cargarDesdeNPoint();
+
+        if (
+            !datos ||
+            !Array.isArray(
+                datos.productos
+            )
+        ) {
+
+            throw new Error(
+                "No se encontraron productos en nPoint."
+            );
+        }
+
+        const productosOriginales =
+            datos.productos;
+
+        const productosMigrados =
+            productosOriginales.map(
+                producto => ({
+                    ...producto
+                })
+            );
+
+        const indices =
+            [];
+
+        productosMigrados.forEach(
+            (producto, indice) => {
+
+                if (
+                    esImagenBase64(
+                        producto.imagen
+                    )
+                ) {
+
+                    indices.push(
+                        indice
+                    );
+                }
+            }
+        );
+
+        if (
+            indices.length === 0
+        ) {
+
+            mensaje.textContent =
+                "No hay imágenes Base64 para migrar.";
+
+            progreso.textContent =
+                "Todas las imágenes ya están en formato de URL.";
+
+            return;
+        }
+
+        progreso.textContent =
+            "Se encontraron " +
+            indices.length +
+            " imágenes para migrar.";
+
+        /*
+           IMPORTANTE:
+           NO modificamos nPoint todavía.
+           Primero subimos todas las imágenes.
+        */
+
+        for (
+            let posicion = 0;
+            posicion < indices.length;
+            posicion++
+        ) {
+
+            const indice =
+                indices[posicion];
+
+            const producto =
+                productosMigrados[indice];
+
+            progreso.textContent =
+                "Migrando imagen " +
+                (posicion + 1) +
+                " de " +
+                indices.length +
+                ": " +
+                producto.nombre;
+
+            const blobOriginal =
+                base64ABlob(
+                    producto.imagen
+                );
+
+            const comprimida =
+                await comprimirImagenDesdeBlob(
+                    blobOriginal,
+                    mensaje =>
+                        progreso.textContent =
+                            "Producto " +
+                            producto.nombre +
+                            ": " +
+                            mensaje
+                );
+
+            const url =
+                await subirImagenAImg402(
+                    comprimida.blob,
+                    mensaje =>
+                        progreso.textContent =
+                            "Producto " +
+                            producto.nombre +
+                            ": " +
+                            mensaje
+                );
+
+            /*
+               Verificamos que realmente haya
+               una URL antes de reemplazar Base64.
+            */
+
+            if (
+                !url ||
+                !url.startsWith(
+                    "http"
+                )
+            ) {
+
+                throw new Error(
+                    "Image402 no devolvió una URL válida para " +
+                    producto.nombre
+                );
+            }
+
+            productosMigrados[indice].imagen =
+                url;
+
+            mensaje.textContent =
+                "Imagen subida: " +
+                producto.nombre +
+                " — " +
+                formatearTamanio(
+                    blobOriginal.size
+                ) +
+                " → " +
+                formatearTamanio(
+                    comprimida.finalBytes
+                );
+        }
+
+        /*
+           Comprobación de seguridad:
+           no debe quedar ningún Base64.
+        */
+
+        const quedanBase64 =
+            productosMigrados.some(
+                producto =>
+                    esImagenBase64(
+                        producto.imagen
+                    )
+            );
+
+        if (quedanBase64) {
+
+            throw new Error(
+                "La migración no terminó correctamente. nPoint NO fue modificado."
+            );
+        }
+
+        progreso.textContent =
+            "Todas las imágenes fueron subidas. Guardando cambios en nPoint...";
+
+        /*
+           RECIÉN AHORA reemplazamos los datos
+           antiguos de nPoint.
+        */
+
+        const datosGuardados =
+            await guardarDatosEnNPoint(
+                productosMigrados,
+                datos.configuracion ||
+                configuracion
+            );
+
+        /*
+           Verificación final.
+        */
+
+        const quedanBase64Despues =
+            datosGuardados.productos.some(
+                producto =>
+                    esImagenBase64(
+                        producto.imagen
+                    )
+            );
+
+        if (
+            quedanBase64Despues
+        ) {
+
+            throw new Error(
+                "La verificación final detectó imágenes Base64 todavía presentes."
+            );
+        }
+
+        productos =
+            datosGuardados.productos;
+
+        configuracion =
+            datosGuardados.configuracion ||
+            configuracion;
+
+        completarConfiguracion();
+        aplicarConfiguracion();
+
+        mostrarCategorias();
+        cargarCategoriasFormulario();
+        mostrarProductos();
+        cargarProductosAdmin();
+
+        progreso.textContent =
+            "Migración terminada correctamente.";
+
+        mensaje.textContent =
+            "Se migraron " +
+            indices.length +
+            " imágenes a Image402 correctamente.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        mensaje.textContent =
+            "No se completó la migración: " +
+            error.message;
+
+        progreso.textContent =
+            "IMPORTANTE: si ocurrió un error antes del guardado final, los productos de nPoint originales no fueron reemplazados.";
+
+    } finally {
+
+        boton.disabled =
+            false;
+    }
+}
+
+
+async function comprimirImagenDesdeBlob(
+    blob,
+    informar = null
+) {
+
+    const archivo =
+        new File(
+            [blob],
+            "imagen.jpg",
+            {
+                type:
+                    blob.type ||
+                    "image/jpeg"
+            }
+        );
+
+    return await comprimirImagenHasta1MB(
+        archivo,
+        informar
+    );
+}
+
+
+/* =========================================================
+   ADMIN
+========================================================= */
+
+function abrirLogin() {
+
+    document.getElementById(
+        "modalLogin"
+    ).classList.remove(
+        "oculto"
+    );
+
+    document.getElementById(
+        "contrasenaLogin"
+    ).value = "";
+
+    document.getElementById(
+        "mensajeLogin"
+    ).textContent = "";
+
+    setTimeout(
+        () => {
+
+            document.getElementById(
+                "contrasenaLogin"
+            ).focus();
+
+        },
+        50
+    );
+}
+
+
+function cerrarLogin() {
+
+    document.getElementById(
+        "modalLogin"
+    ).classList.add(
+        "oculto"
+    );
+}
+
+
+function abrirAdmin() {
+
+    document.getElementById(
+        "adminPanel"
+    ).classList.remove(
+        "oculto"
+    );
+
+    aplicarConfiguracion();
+
+    mostrarCategoriasAdmin();
+
+    cargarCategoriasFormulario();
+
+    cargarProductosAdmin();
+}
+
+
+function cerrarAdmin() {
+
+    document.getElementById(
+        "adminPanel"
+    ).classList.add(
+        "oculto"
+    );
+
+    document.getElementById(
+        "tituloTienda"
+    ).focus();
+}
+
+
+/* =========================================================
+   CONFIG ADMIN
+========================================================= */
+
+async function guardarConfiguracion() {
+
+    configuracion.nombreTienda =
+        "TIENDA";
+
+    configuracion.subtitulo =
+        document.getElementById(
+            "subtituloAdmin"
+        ).value.trim();
+
+    configuracion.aviso =
+        document.getElementById(
+            "avisoAdmin"
+        ).value.trim();
+
+    try {
+
+        const datos =
+            await guardarEnNPoint();
+
+        productos =
+            datos.productos;
+
+        configuracion =
+            datos.configuracion;
+
+        completarConfiguracion();
+
+        aplicarConfiguracion();
+
+        document.getElementById(
+            "mensajeConfiguracion"
+        ).textContent =
+            "Configuración guardada correctamente.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "mensajeConfiguracion"
+        ).textContent =
+            "No se pudo guardar la configuración.";
+    }
+}
+
+
+/* =========================================================
+   CATEGORÍA NUEVA
+========================================================= */
+
+async function agregarNuevaCategoria() {
+
+    const input =
+        document.getElementById(
+            "nuevaCategoria"
+        );
+
+    const nombre =
+        input.value.trim();
+
+    if (!nombre) {
+
+        document.getElementById(
+            "mensajeCategorias"
+        ).textContent =
+            "Escribí un nombre para la categoría.";
+
+        input.focus();
+
+        return;
+    }
+
+    if (
+        obtenerCategorias()
+            .some(
+                categoria =>
+                    categoria.toLowerCase() ===
+                    nombre.toLowerCase()
+            )
+    ) {
+
+        document.getElementById(
+            "mensajeCategorias"
+        ).textContent =
+            "Esa categoría ya existe.";
+
+        input.focus();
+
+        return;
+    }
+
+    configuracion
+        .categoriasActivas[nombre] =
+        true;
+
+    try {
+
+        await guardarEnNPoint();
+
+        input.value = "";
+
+        mostrarCategoriasAdmin();
+        cargarCategoriasFormulario();
+        mostrarCategorias();
+
+        document.getElementById(
+            "mensajeCategorias"
+        ).textContent =
+            "Categoría agregada correctamente.";
+
+        input.focus();
+
+    } catch (error) {
+
+        console.error(error);
+
+        delete configuracion
+            .categoriasActivas[nombre];
+
+        document.getElementById(
+            "mensajeCategorias"
+        ).textContent =
+            "No se pudo guardar la categoría.";
+    }
+}
+
+
+/* =========================================================
+   STOCK
+========================================================= */
+
+async function guardarConfiguracionStock() {
+
+    configuracion.mostrarStock =
+        document.getElementById(
+            "mostrarStockAdmin"
+        ).checked;
+
+    try {
+
+        await guardarEnNPoint();
+
+        aplicarConfiguracion();
+
+        mostrarProductos();
+
+        document.getElementById(
+            "mensajeStock"
+        ).textContent =
+            "Configuración de stock guardada.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "mensajeStock"
+        ).textContent =
+            "No se pudo guardar la configuración.";
+    }
+}
+
+
+/* =========================================================
+   LISTA ADMIN PRODUCTOS
+========================================================= */
+
+function cargarProductosAdmin() {
+
+    const contenedor =
+        document.getElementById(
+            "listaProductosAdmin"
+        );
+
+    contenedor.innerHTML = "";
+
+    if (
+        productos.length === 0
+    ) {
+
+        const mensaje =
+            document.createElement(
+                "p"
+            );
+
+        mensaje.textContent =
+            "No hay productos cargados.";
+
+        contenedor.appendChild(
+            mensaje
+        );
+
+        return;
+    }
+
+    productos.forEach(
+        producto => {
+
+            const elemento =
+                document.createElement(
+                    "div"
+                );
+
+            elemento.className =
+                "admin-producto";
+
+            const nombre =
+                document.createElement(
+                    "strong"
+                );
+
+            nombre.textContent =
+                producto.nombre;
+
+            elemento.appendChild(
+                nombre
+            );
+
+            const precio =
+                document.createElement(
+                    "div"
+                );
+
+            precio.textContent =
+                "Precio: $" +
+                formatearPrecio(
+                    producto.precio
+                );
+
+            elemento.appendChild(
+                precio
+            );
+
+            if (
+                producto.categoria
+            ) {
+
+                const categoria =
+                    document.createElement(
+                        "div"
+                    );
+
+                categoria.textContent =
+                    "Categoría: " +
+                    producto.categoria;
+
+                elemento.appendChild(
+                    categoria
+                );
+            }
+
+            if (
+                tieneControlStock(
+                    producto
+                )
+            ) {
+
+                const stock =
+                    document.createElement(
+                        "div"
+                    );
+
+                stock.textContent =
+                    "Stock: " +
+                    obtenerStock(
+                        producto
+                    );
+
+                elemento.appendChild(
+                    stock
+                );
+            }
+
+            const imagenEstado =
+                document.createElement(
+                    "div"
+                );
+
+            if (
+                esImagenBase64(
+                    producto.imagen
+                )
+            ) {
+
+                imagenEstado.textContent =
+                    "Imagen: Base64 — pendiente de migración.";
+
+            } else if (
+                producto.imagen &&
+                producto.imagen.startsWith(
+                    "http"
+                )
+            ) {
+
+                imagenEstado.textContent =
+                    "Imagen: Image402 / URL.";
+
+            } else {
+
+                imagenEstado.textContent =
+                    "Imagen: sin imagen.";
+            }
+
+            elemento.appendChild(
+                imagenEstado
+            );
+
+            const botones =
+                document.createElement(
+                    "div"
+                );
+
+            botones.className =
+                "botones";
+
+            const editar =
+                document.createElement(
+                    "button"
+                );
+
+            editar.type =
+                "button";
+
+            editar.className =
+                "btn btn-editar";
+
+            editar.textContent =
+                "Editar";
+
+            editar.addEventListener(
+                "click",
+                () => {
+
+                    editarProducto(
+                        producto.id
+                    );
+                }
+            );
+
+            botones.appendChild(
+                editar
+            );
+
+            const eliminar =
+                document.createElement(
+                    "button"
+                );
+
+            eliminar.type =
+                "button";
+
+            eliminar.className =
+                "btn btn-eliminar";
+
+            eliminar.textContent =
+                "Eliminar";
+
+            eliminar.addEventListener(
+                "click",
+                () => {
+
+                    eliminarProducto(
+                        producto.id
+                    );
+                }
+            );
+
+            botones.appendChild(
+                eliminar
+            );
+
+            elemento.appendChild(
+                botones
+            );
+
+            contenedor.appendChild(
+                elemento
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   EDITAR
+========================================================= */
+
+function editarProducto(id) {
+
+    const producto =
+        productos.find(
+            p =>
+                p.id === id
+        );
+
+    if (!producto) {
+        return;
+    }
+
+    productoEditandoId =
+        id;
+
+    document.getElementById(
+        "tituloFormularioProducto"
+    ).textContent =
+        "Editar producto";
+
+    document.getElementById(
+        "nombreProducto"
+    ).value =
+        producto.nombre || "";
+
+    document.getElementById(
+        "precioProducto"
+    ).value =
+        producto.precio || "";
+
+    document.getElementById(
+        "descripcionProducto"
+    ).value =
+        producto.descripcion || "";
+
+    cargarCategoriasFormulario();
+
+    document.getElementById(
+        "categoriaProducto"
+    ).value =
+        producto.categoria || "";
+
+    document.getElementById(
+        "stockProducto"
+    ).value =
+        tieneControlStock(
+            producto
+        )
+            ? producto.stock
+            : "";
+
+    document.getElementById(
+        "imagenProducto"
+    ).value =
+        "";
+
+    const preview =
+        document.getElementById(
+            "previewImagen"
+        );
+
+    const estadoImagen =
+        document.getElementById(
+            "estadoImagen"
+        );
+
+    if (producto.imagen) {
+
+        preview.src =
+            producto.imagen;
+
+        preview.classList.remove(
+            "oculto"
+        );
+
+        preview.alt =
+            "Imagen actual de " +
+            producto.nombre;
+
+        if (
+            esImagenBase64(
+                producto.imagen
+            )
+        ) {
+
+            estadoImagen.textContent =
+                "Este producto todavía tiene una imagen antigua en Base64. Si elegís una imagen nueva, será subida automáticamente a Image402.";
+
+        } else {
+
+            estadoImagen.textContent =
+                "Imagen actual almacenada mediante URL.";
+        }
+
+    } else {
+
+        preview.classList.add(
+            "oculto"
+        );
+
+        preview.removeAttribute(
+            "src"
+        );
+
+        estadoImagen.textContent =
+            "";
+    }
+
+    document.getElementById(
+        "cancelarEdicion"
+    ).classList.remove(
+        "oculto"
+    );
+
+    document.getElementById(
+        "nombreProducto"
+    ).focus();
+}
+
+
+/* =========================================================
+   GUARDAR PRODUCTO
+========================================================= */
+
+async function guardarProducto(
+    evento
+) {
+
+    evento.preventDefault();
+
+    const boton =
+        document.getElementById(
+            "guardarProducto"
+        );
+
+    const mensaje =
+        document.getElementById(
+            "mensajeProducto"
+        );
+
+    const estadoImagen =
+        document.getElementById(
+            "estadoImagen"
+        );
+
+    const nombre =
+        document.getElementById(
+            "nombreProducto"
+        ).value.trim();
+
+    const precio =
+        document.getElementById(
+            "precioProducto"
+        ).value;
+
+    const descripcion =
+        document.getElementById(
+            "descripcionProducto"
+        ).value.trim();
+
+    const categoria =
+        document.getElementById(
+            "categoriaProducto"
+        ).value;
+
+    const stockTexto =
+        document.getElementById(
+            "stockProducto"
+        ).value.trim();
+
+    const archivo =
+        document.getElementById(
+            "imagenProducto"
+        ).files[0];
+
+    if (!nombre) {
+
+        mensaje.textContent =
+            "El nombre es obligatorio.";
+
+        return;
+    }
+
+    if (
+        precio === "" ||
+        Number(precio) < 0
+    ) {
+
+        mensaje.textContent =
+            "El precio es obligatorio.";
+
+        return;
+    }
+
+    let stock = "";
+
+    if (
+        stockTexto !== ""
+    ) {
+
+        const numeroStock =
+            Number(
+                stockTexto
+            );
+
+        if (
+            !Number.isInteger(
+                numeroStock
+            ) ||
+            numeroStock < 0
+        ) {
+
+            mensaje.textContent =
+                "El stock debe ser un número entero igual o mayor a cero.";
+
+            return;
+        }
+
+        stock =
+            numeroStock;
+    }
+
+    boton.disabled =
+        true;
+
+    try {
+
+        let imagenURL =
+            null;
+
+        /*
+           Si el usuario seleccionó una imagen nueva,
+           se comprime y se sube a Image402.
+        */
+
+        if (archivo) {
+
+            mensaje.textContent =
+                "Procesando imagen...";
+
+            estadoImagen.textContent =
+                "Tamaño original: " +
+                formatearTamanio(
+                    archivo.size
+                );
+
+            const comprimida =
+                await comprimirImagenHasta1MB(
+                    archivo,
+                    texto => {
+
+                        estadoImagen.textContent =
+                            "Tamaño original: " +
+                            formatearTamanio(
+                                archivo.size
+                            ) +
+                            " — " +
+                            texto;
+                    }
+                );
+
+            estadoImagen.textContent =
+                "Imagen comprimida: " +
+                formatearTamanio(
+                    archivo.size
+                ) +
+                " → " +
+                formatearTamanio(
+                    comprimida.finalBytes
+                ) +
+                ". Subiendo a Image402...";
+
+            imagenURL =
+                await subirImagenAImg402(
+                    comprimida.blob,
+                    texto => {
+
+                        estadoImagen.textContent =
+                            "Tamaño original: " +
+                            formatearTamanio(
+                                archivo.size
+                            ) +
+                            " → " +
+                            formatearTamanio(
+                                comprimida.finalBytes
+                            ) +
+                            ". " +
+                            texto;
+                    }
+                );
+
+            if (
+                !imagenURL ||
+                !imagenURL.startsWith(
+                    "http"
+                )
+            ) {
+
+                throw new Error(
+                    "No se obtuvo una URL válida de Image402."
+                );
+            }
+
+            estadoImagen.textContent =
+                "Imagen subida correctamente a Image402. " +
+                "Original: " +
+                formatearTamanio(
+                    archivo.size
+                ) +
+                ". Final: " +
+                formatearTamanio(
+                    comprimida.finalBytes
+                ) +
+                ".";
+        }
+
+        if (
+            productoEditandoId
+        ) {
+
+            const producto =
+                productos.find(
+                    p =>
+                        p.id ===
+                        productoEditandoId
+                );
+
+            if (!producto) {
+
+                throw new Error(
+                    "Producto no encontrado."
+                );
+            }
+
+            producto.nombre =
+                nombre;
+
+            producto.precio =
+                Number(precio);
+
+            producto.descripcion =
+                descripcion;
+
+            producto.categoria =
+                categoria;
+
+            producto.stock =
+                stock;
+
+            /*
+               Si hay una imagen nueva,
+               reemplazamos la anterior.
+               Si no, conservamos la anterior.
+            */
+
+            if (imagenURL) {
+
+                producto.imagen =
+                    imagenURL;
+            }
+
+        } else {
+
+            /*
+               Producto nuevo:
+               la imagen sigue siendo obligatoria.
+            */
+
+            if (!imagenURL) {
+
+                mensaje.textContent =
+                    "Para un producto nuevo tenés que seleccionar una imagen.";
+
+                boton.disabled =
+                    false;
+
+                return;
+            }
+
+            productos.push({
+
+                id:
+                    generarId(),
+
+                nombre:
+                    nombre,
+
+                precio:
+                    Number(precio),
+
+                descripcion:
+                    descripcion,
+
+                categoria:
+                    categoria,
+
+                stock:
+                    stock,
+
+                imagen:
+                    imagenURL
+            });
+        }
+
+        repararIds();
+
+        mensaje.textContent =
+            "Guardando producto en nPoint...";
+
+        const datos =
+            await guardarEnNPoint();
+
+        productos =
+            datos.productos;
+
+        configuracion =
+            datos.configuracion;
+
+        completarConfiguracion();
+
+        limpiarFormularioProducto();
+
+        mostrarProductos();
+
+        mostrarCategorias();
+
+        cargarCategoriasFormulario();
+
+        cargarProductosAdmin();
+
+        mensaje.textContent =
+            "Producto guardado correctamente.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        mensaje.textContent =
+            "No se pudo guardar el producto: " +
+            error.message;
+
+    } finally {
+
+        boton.disabled =
+            false;
+    }
+}
+
+
+/* =========================================================
+   LIMPIAR FORMULARIO
+========================================================= */
+
+function limpiarFormularioProducto() {
+
+    productoEditandoId =
+        null;
+
+    document.getElementById(
+        "formProducto"
+    ).reset();
+
+    document.getElementById(
+        "tituloFormularioProducto"
+    ).textContent =
+        "Agregar producto";
+
+    document.getElementById(
+        "cancelarEdicion"
+    ).classList.add(
+        "oculto"
+    );
+
+    document.getElementById(
+        "previewImagen"
+    ).classList.add(
+        "oculto"
+    );
+
+    document.getElementById(
+        "previewImagen"
+    ).removeAttribute(
+        "src"
+    );
+
+    document.getElementById(
+        "estadoImagen"
+    ).textContent =
+        "";
+}
+
+
+/* =========================================================
+   ELIMINAR PRODUCTO
+========================================================= */
+
+async function eliminarProducto(
+    id
+) {
+
+    const producto =
+        productos.find(
+            p =>
+                p.id === id
+        );
+
+    if (!producto) {
+        return;
+    }
+
+    const confirmar =
+        confirm(
+            "¿Querés eliminar el producto " +
+            producto.nombre +
+            "?"
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    const productosAnteriores =
+        [...productos];
+
+    productos =
+        productos.filter(
+            p =>
+                p.id !== id
+        );
+
+    try {
+
+        const datos =
+            await guardarEnNPoint();
+
+        const listaConfirmada =
+            Array.isArray(
+                datos.productos
+            )
+                ? datos.productos
+                : [];
+
+        const sigueExistiendo =
+            listaConfirmada.some(
+                p =>
+                    p.id === id
+            );
+
+        if (sigueExistiendo) {
+
+            productos =
+                productosAnteriores;
+
+            throw new Error(
+                "nPoint todavía contiene el producto."
+            );
+        }
+
+        productos =
+            listaConfirmada;
+
+        mostrarProductos();
+        cargarProductosAdmin();
+        mostrarCategorias();
+
+        alert(
+            "Producto eliminado correctamente."
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        productos =
+            productosAnteriores;
+
+        mostrarProductos();
+        cargarProductosAdmin();
+        mostrarCategorias();
+
+        alert(
+            "No se pudo eliminar el producto de nPoint."
+        );
+    }
+}
+
+
+/* =========================================================
+   CONTRASEÑA
+========================================================= */
+
+async function cambiarContrasena() {
+
+    const nueva =
+        document.getElementById(
+            "nuevaContrasena"
+        ).value.trim();
+
+    if (!nueva) {
+
+        document.getElementById(
+            "mensajeSeguridad"
+        ).textContent =
+            "Escribí una nueva contraseña.";
+
+        return;
+    }
+
+    configuracion.contrasenaAdmin =
+        nueva;
+
+    try {
+
+        await guardarEnNPoint();
+
+        document.getElementById(
+            "nuevaContrasena"
+        ).value = "";
+
+        document.getElementById(
+            "mensajeSeguridad"
+        ).textContent =
+            "Contraseña cambiada correctamente.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "mensajeSeguridad"
+        ).textContent =
+            "No se pudo cambiar la contraseña.";
+    }
+}
+
+
+/* =========================================================
+   INICIO
+========================================================= */
+
+async function iniciar() {
+
+    try {
+
+        const datos =
+            await cargarDesdeNPoint();
+
+        if (
+            datos &&
+            Array.isArray(
+                datos.productos
+            )
+        ) {
+
+            productos =
+                datos.productos;
+
+            configuracion =
+                datos.configuracion ||
+                {};
+
+            completarConfiguracion();
+
+        } else {
+
+            productos =
+                [];
+
+            completarConfiguracion();
+
+            await guardarEnNPoint();
+        }
+
+        repararIds();
+
+        aplicarConfiguracion();
+
+        mostrarCategorias();
+
+        cargarCategoriasFormulario();
+
+        mostrarProductos();
+
+        mostrarCarrito();
+
+        cargarProductosAdmin();
+
+        document.getElementById(
+            "estado"
+        ).textContent =
+            "Tienda cargada correctamente.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "estado"
+        ).textContent =
+            "No se pudo cargar la tienda. Verificá la conexión a Internet.";
+    }
+}
+
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+document.getElementById(
+    "buscador"
+).addEventListener(
+    "input",
+    mostrarProductos
+);
+
+
+document.getElementById(
+    "btnAbrirCarrito"
+).addEventListener(
+    "click",
+    abrirCarrito
+);
+
+
+document.getElementById(
+    "cerrarCarrito"
+).addEventListener(
+    "click",
+    cerrarCarrito
+);
+
+
+document.getElementById(
+    "vaciarCarrito"
+).addEventListener(
+    "click",
+    vaciarCarrito
+);
+
+
+document.getElementById(
+    "enviarCarritoWhatsApp"
+).addEventListener(
+    "click",
+    enviarCarritoWhatsApp
+);
+
+
+document.getElementById(
+    "guardarConfiguracion"
+).addEventListener(
+    "click",
+    guardarConfiguracion
+);
+
+
+document.getElementById(
+    "agregarCategoria"
+).addEventListener(
+    "click",
+    agregarNuevaCategoria
+);
+
+
+document.getElementById(
+    "nuevaCategoria"
+).addEventListener(
+    "keydown",
+    evento => {
+
+        if (
+            evento.key === "Enter"
+        ) {
+
+            evento.preventDefault();
+
+            agregarNuevaCategoria();
+        }
+    }
+);
+
+
+document.getElementById(
+    "guardarStock"
+).addEventListener(
+    "click",
+    guardarConfiguracionStock
+);
+
+
+document.getElementById(
+    "formProducto"
+).addEventListener(
+    "submit",
+    guardarProducto
+);
+
+
+document.getElementById(
+    "cancelarEdicion"
+).addEventListener(
+    "click",
+    () => {
+
+        limpiarFormularioProducto();
+
+        document.getElementById(
+            "nombreProducto"
+        ).focus();
+    }
+);
+
+
+document.getElementById(
+    "cambiarContrasena"
+).addEventListener(
+    "click",
+    cambiarContrasena
+);
+
+
+document.getElementById(
+    "cerrarAdmin"
+).addEventListener(
+    "click",
+    cerrarAdmin
+);
+
+
+document.getElementById(
+    "cerrarLogin"
+).addEventListener(
+    "click",
+    cerrarLogin
+);
+
+
+document.getElementById(
+    "ingresarAdmin"
+).addEventListener(
+    "click",
+    () => {
+
+        const contrasena =
+            document.getElementById(
+                "contrasenaLogin"
+            ).value;
+
+        if (
+            contrasena ===
+            (
+                configuracion.contrasenaAdmin ||
+                CONTRASENA_INICIAL
+            )
+        ) {
+
+            cerrarLogin();
+
+            abrirAdmin();
+
+        } else {
+
+            document.getElementById(
+                "mensajeLogin"
+            ).textContent =
+                "Contraseña incorrecta.";
+
+            document.getElementById(
+                "contrasenaLogin"
+            ).focus();
+        }
+    }
+);
+
+
+document.getElementById(
+    "contrasenaLogin"
+).addEventListener(
+    "keydown",
+    evento => {
+
+        if (
+            evento.key === "Enter"
+        ) {
+
+            document.getElementById(
+                "ingresarAdmin"
+            ).click();
+        }
+    }
+);
+
+
+/* =========================================================
+   MIGRACIÓN IMAGE402
+========================================================= */
+
+document.getElementById(
+    "migrarImagenesImg402"
+).addEventListener(
+    "click",
+    migrarImagenesAImg402
+);
+
+
+/* =========================================================
+   TRES CLICS SOBRE TIENDA
+========================================================= */
+
+let contadorClicksTitulo =
+    0;
+
+let ultimoClickTitulo =
+    0;
+
+document.getElementById(
+    "tituloTienda"
+).addEventListener(
+    "click",
+    () => {
+
+        const ahora =
+            Date.now();
+
+        if (
+            ahora -
+            ultimoClickTitulo >
+            1200
+        ) {
+
+            contadorClicksTitulo =
+                0;
+        }
+
+        contadorClicksTitulo++;
+
+        ultimoClickTitulo =
+            ahora;
+
+        if (
+            contadorClicksTitulo >= 3
+        ) {
+
+            contadorClicksTitulo =
+                0;
+
+            abrirLogin();
+        }
+    }
+);
+
+
+document.getElementById(
+    "tituloTienda"
+).addEventListener(
+    "keydown",
+    evento => {
+
+        if (
+            evento.key === "Enter" ||
+            evento.key === " "
+        ) {
+
+            evento.preventDefault();
+
+            document.getElementById(
+                "tituloTienda"
+            ).click();
+        }
+    }
+);
+
+
+/* =========================================================
+   VISTA PREVIA
+========================================================= */
+
+document.getElementById(
+    "imagenProducto"
+).addEventListener(
+    "change",
+    evento => {
+
+        const archivo =
+            evento.target.files[0];
+
+        const preview =
+            document.getElementById(
+                "previewImagen"
+            );
+
+        const estadoImagen =
+            document.getElementById(
+                "estadoImagen"
+            );
+
+        if (!archivo) {
+
+            preview.classList.add(
+                "oculto"
+            );
+
+            estadoImagen.textContent =
+                "";
+
+            return;
+        }
+
+        estadoImagen.textContent =
+            "Tamaño original: " +
+            formatearTamanio(
+                archivo.size
+            );
+
+        const lector =
+            new FileReader();
+
+        lector.onload =
+            eventoLector => {
+
+                preview.src =
+                    eventoLector.target.result;
+
+                preview.alt =
+                    "Vista previa de la imagen seleccionada";
+
+                preview.classList.remove(
+                    "oculto"
+                );
+            };
+
+        lector.readAsDataURL(
+            archivo
+        );
+    }
+);
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+iniciar();
+
+</script>
+
+</body>
+</html>
