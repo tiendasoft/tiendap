@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Diagnóstico Automotor IA</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --fondo: #101827;
+      --panel: #1b2739;
+      --campo: #111c2d;
+      --texto: #f4f7fc;
+      --secundario: #bdc9db;
+      --azul: #3984ff;
+      --verde: #29c58b;
+      --borde: #43516a;
+      --rojo: #ff7777;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 18px;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    main {
+      max-width: 720px;
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.65rem;
+    }
+
+    h2 { font-size: 1.25rem; }
+
+    p { color: var(--secundario); }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--borde);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 16px 0 7px;
+    }
+
+    input, select, textarea, button {
+      font: inherit;
+      width: 100%;
+      border-radius: 9px;
+    }
+
+    input, select, textarea {
+      background: var(--campo);
+      color: var(--texto);
+      border: 1px solid var(--borde);
+      padding: 12px;
+    }
+
+    textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      padding: 12px 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+      background: var(--azul);
+      color: white;
+    }
+
+    button.secundario {
+      background: #34445d;
+    }
+
+    button.peligro {
+      background: #8f303b;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #ffd166;
+      outline-offset: 3px;
+    }
+
+    a { color: #8fc1ff; }
+
+    .estado {
+      margin-top: 14px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .resultado {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: var(--campo);
+      padding: 16px;
+      border-radius: 10px;
+      border-left: 4px solid var(--verde);
+      min-height: 60px;
+    }
+
+    .ayuda {
+      font-size: .92rem;
+      color: var(--secundario);
+    }
+
+    [hidden] { display: none !important; }
+  </style>
+</head>
+
+<body>
+<main>
+  <header>
+    <div>
+      <h1>Diagnóstico Automotor IA</h1>
+      <p>Asistente técnico de inyección electrónica y ECU.</p>
+    </div>
+
+    <button id="btnConfiguracion" type="button"
+      style="width:auto;margin-top:0">
+      Configuración de IA
+    </button>
+  </header>
+
+  <section id="vistaDiagnostico" class="panel">
+    <h2>Diagnosticar una falla</h2>
+    <p>Ingresá los datos del vehículo y describí el síntoma.</p>
+
+    <form id="formDiagnostico">
+      <label for="marca">Marca del vehículo</label>
+      <input id="marca" name="marca" required
+        placeholder="Ej.: Volkswagen">
+
+      <label for="modelo">Modelo y año</label>
+      <input id="modelo" name="modelo" required
+        placeholder="Ej.: Gol Trend 2015">
+
+      <label for="combustible">Combustible</label>
+      <select id="combustible" name="combustible" required>
+        <option value="">Seleccionar combustible</option>
+        <option>Nafta</option>
+        <option>Diésel</option>
+        <option>GNC</option>
+        <option>Flex</option>
+        <option>Híbrido</option>
+        <option>Otro</option>
+      </select>
+
+      <label for="falla">Descripción de la falla</label>
+      <textarea id="falla" name="falla" required
+        placeholder="Ej.: no arranca, pierde potencia, falla en caliente, código de error P0300..."></textarea>
+
+      <button id="btnDiagnosticar" type="submit">
+        Diagnosticar falla
+      </button>
+
+      <button id="btnLimpiar" class="secundario" type="button">
+        Limpiar formulario
+      </button>
+    </form>
+
+    <div id="estadoDiagnostico" class="estado"
+      role="status" aria-live="polite"></div>
+
+    <section id="seccionResultado" hidden aria-labelledby="tituloResultado">
+      <h2 id="tituloResultado" tabindex="-1">Resultado del diagnóstico</h2>
+      <div id="resultado" class="resultado"
+        role="region" aria-label="Respuesta de la inteligencia artificial"
+        aria-live="polite"></div>
+      <button id="btnCopiar" class="secundario" type="button">
+        Copiar diagnóstico
+      </button>
+    </section>
+  </section>
+
+  <section id="vistaConfiguracion" class="panel" hidden>
+    <h2 tabindex="-1" id="tituloConfiguracion">Configuración de IA</h2>
+
+    <p>
+      Cada navegador o dispositivo guarda su propia configuración.
+      Para usar la aplicación en otro dispositivo, configurá allí
+      tu propia clave.
+    </p>
+
+    <p>
+      <a href="https://aistudio.google.com/app/apikey"
+        target="_blank" rel="noopener noreferrer">
+        Crear o consultar mi clave API de Google AI Studio
+      </a>
+    </p>
+
+    <label for="apiKey">Clave API de Gemini</label>
+    <input id="apiKey" type="password"
+      autocomplete="off" spellcheck="false"
+      placeholder="Pegá tu clave API">
+
+    <button id="btnMostrarClave" class="secundario" type="button">
+      Mostrar clave API
+    </button>
+
+    <label for="modeloIA">Modelo de inteligencia artificial</label>
+    <select id="modeloIA">
+      <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash-Lite</option>
+      <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+      <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash-Lite</option>
+    </select>
+
+    <p class="ayuda">
+      Los modelos disponibles pueden variar según tu cuenta.
+      Si uno no funciona, elegí otro que esté habilitado en AI Studio.
+    </p>
+
+    <button id="btnGuardar" type="button">Guardar configuración</button>
+    <button id="btnProbar" class="secundario" type="button">
+      Probar conexión con Gemini
+    </button>
+    <button id="btnEliminar" class="peligro" type="button">
+      Eliminar clave y configuración guardada
+    </button>
+    <button id="btnVolver" class="secundario" type="button">
+      Volver al diagnóstico
+    </button>
+
+    <div id="estadoConfiguracion" class="estado"
+      role="status" aria-live="polite"></div>
+  </section>
+
+  <p class="ayuda">
+    Importante: la IA ofrece hipótesis, no confirma averías por sí sola.
+    Verificá las mediciones y los datos técnicos antes de reparar o
+    sustituir componentes.
+  </p>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+
+  const CLAVE_CONFIG = "asistenteDiagnosticoGeminiConfigV1";
+
+  const INSTRUCCIONES = `
+Sos un especialista en diagnóstico automotor, inyección electrónica,
+ECU, sensores, actuadores y electrónica vehicular.
+
+OBJETIVO:
+Resolver la consulta del técnico de forma BREVE, DIRECTA y TÉCNICA.
+
+REGLAS OBLIGATORIAS:
+- Máximo 120 palabras en toda la respuesta.
+- No incluyas saludos, introducciones ni conclusiones generales.
+- Respondé específicamente a los síntomas informados.
+- Indicá la causa más probable, sin presentarla como confirmada.
+- Incluí como máximo 3 comprobaciones concretas.
+- Priorizá pruebas de diagnóstico antes de cambiar piezas.
+- Si hay un código de falla, explicá brevemente qué indica y qué revisar.
+- No inventes valores de presión, voltaje, resistencia ni códigos.
+- Si falta información para identificar la causa, indicá la prueba
+  concreta que permitiría distinguir entre las posibilidades.
+- Advertí brevemente si una comprobación requiere instrumental
+  especializado o precauciones de seguridad.
+
+USÁ EXACTAMENTE ESTE FORMATO:
+
+FALLA PROBABLE:
+Una explicación breve de la causa más probable.
+
+QUÉ REVISAR:
+1. Primera comprobación concreta.
+2. Segunda comprobación, si corresponde.
+3. Tercera comprobación, si corresponde.
+
+SOLUCIÓN:
+Acción recomendada si las pruebas confirman la causa.
+
+No agregues otras secciones. Evitá repetir la información
+que el técnico ya proporcionó.
+`;
+
+  let config = cargarConfig();
+
+  function cargarConfig() {
+    try {
+      const guardada = localStorage.getItem(CLAVE_CONFIG);
+      if (!guardada) return { apiKey: "", model: "gemini-3.1-flash-lite" };
+
+      const datos = JSON.parse(guardada);
+      return {
+        apiKey: typeof datos.apiKey === "string" ? datos.apiKey : "",
+        model: typeof datos.model === "string"
+          ? datos.model : "gemini-3.1-flash-lite"
+      };
+    } catch {
+      return { apiKey: "", model: "gemini-3.1-flash-lite" };
+    }
+  }
+
+  function guardarConfig() {
+    config.apiKey = $("apiKey").value.trim();
+    config.model = $("modeloIA").value;
+
+    if (!config.apiKey) {
+      $("estadoConfiguracion").textContent =
+        "Ingresá una clave API antes de guardar.";
+      $("apiKey").focus();
+      return false;
+    }
+
+    try {
+      localStorage.setItem(CLAVE_CONFIG, JSON.stringify(config));
+      $("estadoConfiguracion").textContent =
+        "Configuración guardada en este navegador.";
+      return true;
+    } catch {
+      $("estadoConfiguracion").textContent =
+        "No se pudo guardar la configuración en este navegador.";
+      return false;
+    }
+  }
+
+  function mostrarConfiguracion(abierta) {
+    $("vistaConfiguracion").hidden = !abierta;
+    $("vistaDiagnostico").hidden = abierta;
+
+    if (abierta) {
+      $("apiKey").value = config.apiKey;
+      $("modeloIA").value = config.model;
+      $("estadoConfiguracion").textContent = "";
+      $("tituloConfiguracion").focus();
+    } else {
+      $("marca").focus();
+    }
+  }
+
+  async function llamarGemini(mensaje, maxTokens = 450) {
+    if (!config.apiKey) {
+      throw new Error("Configurá primero tu clave API de Gemini.");
+    }
+
+    const endpoint =
+      "https://generativelanguage.googleapis.com/v1beta/models/" +
+      encodeURIComponent(config.model) + ":generateContent";
+
+    const respuesta = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": config.apiKey
+      },
+      body: JSON.stringify({
+        systemInstruction: {
+          parts: [{ text: INSTRUCCIONES }]
+        },
+        contents: [{
+          role: "user",
+          parts: [{ text: mensaje }]
+        }],
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: maxTokens
+        }
+      })
+    });
+
+    let datos;
+    try {
+      datos = await respuesta.json();
+    } catch {
+      throw new Error("Gemini devolvió una respuesta que no se pudo leer.");
+    }
+
+    if (!respuesta.ok) {
+      const detalle = datos?.error?.message ||
+        ("Error HTTP " + respuesta.status);
+      throw new Error(detalle);
+    }
+
+    const texto = (datos.candidates?.[0]?.content?.parts || [])
+      .map(parte => parte.text || "")
+      .join("")
+      .trim();
+
+    if (!texto) {
+      const motivo = datos.candidates?.[0]?.finishReason;
+      throw new Error(
+        "Gemini no generó una respuesta. " +
+        (motivo ? "Motivo: " + motivo : "Probá nuevamente.")
+      );
+    }
+
+    return texto;
+  }
+
+  $("btnConfiguracion").addEventListener("click", () => {
+    mostrarConfiguracion(true);
+  });
+
+  $("btnVolver").addEventListener("click", () => {
+    mostrarConfiguracion(false);
+  });
+
+  $("btnMostrarClave").addEventListener("click", () => {
+    const campo = $("apiKey");
+    const mostrar = campo.type === "password";
+    campo.type = mostrar ? "text" : "password";
+    $("btnMostrarClave").textContent =
+      mostrar ? "Ocultar clave API" : "Mostrar clave API";
+  });
+
+  $("btnGuardar").addEventListener("click", () => {
+    guardarConfig();
+  });
+
+  $("btnEliminar").addEventListener("click", () => {
+    if (!confirm("¿Eliminar la clave API y la configuración guardada en este navegador?")) {
+      return;
+    }
+
+    try {
+      localStorage.removeItem(CLAVE_CONFIG);
+      config = {
+        apiKey: "",
+        model: "gemini-3.1-flash-lite"
+      };
+      $("apiKey").value = "";
+      $("modeloIA").value = config.model;
+      $("estadoConfiguracion").textContent =
+        "Clave y configuración eliminadas de este navegador.";
+    } catch {
+      $("estadoConfiguracion").textContent =
+        "No se pudo eliminar la configuración.";
+    }
+  });
+
+  $("btnProbar").addEventListener("click", async () => {
+    if (!guardarConfig()) return;
+
+    const boton = $("btnProbar");
+    boton.disabled = true;
+    $("estadoConfiguracion").textContent =
+      "Probando conexión con Gemini...";
+
+    try {
+      await llamarGemini(
+        "Respondé únicamente: Conexión correcta.",
+        30
+      );
+      $("estadoConfiguracion").textContent =
+        "Conexión correcta. Gemini respondió correctamente.";
+    } catch (error) {
+      $("estadoConfiguracion").textContent =
+        "No se pudo conectar: " + error.message;
+    } finally {
+      boton.disabled = false;
+    }
+  });
+
+  $("formDiagnostico").addEventListener("submit", async evento => {
+    evento.preventDefault();
+
+    if (!config.apiKey) {
+      mostrarConfiguracion(true);
+      $("estadoConfiguracion").textContent =
+        "Primero configurá tu clave API.";
+      $("apiKey").focus();
+      return;
+    }
+
+    const marca = $("marca").value.trim();
+    const modelo = $("modelo").value.trim();
+    const combustible = $("combustible").value;
+    const falla = $("falla").value.trim();
+
+    if (!marca || !modelo || !combustible || !falla) {
+      $("estadoDiagnostico").textContent =
+        "Completá todos los campos antes de diagnosticar.";
+      return;
+    }
+
+    const boton = $("btnDiagnosticar");
+    boton.disabled = true;
+    $("estadoDiagnostico").textContent =
+      "Analizando la falla...";
+    $("seccionResultado").hidden = true;
+
+    const consulta = `
+Vehículo:
+Marca: ${marca}
+Modelo y año: ${modelo}
+Combustible: ${combustible}
+
+Falla informada por el técnico:
+${falla}
+
+Indicá la causa más probable y las comprobaciones necesarias.
+Cumplí estrictamente el formato y el límite de palabras.
+`;
+
+    try {
+      const respuesta = await llamarGemini(consulta);
+      $("resultado").textContent = respuesta;
+      $("seccionResultado").hidden = false;
+      $("estadoDiagnostico").textContent =
+        "Diagnóstico recibido.";
+      $("tituloResultado").focus();
+    } catch (error) {
+      $("estadoDiagnostico").textContent =
+        "Error al diagnosticar: " + error.message;
+    } finally {
+      boton.disabled = false;
+    }
+  });
+
+  $("btnLimpiar").addEventListener("click", () => {
+    $("formDiagnostico").reset();
+    $("resultado").textContent = "";
+    $("seccionResultado").hidden = true;
+    $("estadoDiagnostico").textContent =
+      "Formulario limpio.";
+    $("marca").focus();
+  });
+
+  $("btnCopiar").addEventListener("click", async () => {
+    const texto = $("resultado").textContent;
+
+    try {
+      await navigator.clipboard.writeText(texto);
+      $("estadoDiagnostico").textContent =
+        "Diagnóstico copiado.";
+    } catch {
+      $("estadoDiagnostico").textContent =
+        "No se pudo copiar automáticamente. Podés seleccionar el texto del diagnóstico.";
+    }
+  });
+
+  $("modeloIA").value = config.model;
+})();
+</script>
+</body>
+</html>
